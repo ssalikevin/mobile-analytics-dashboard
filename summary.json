@@ -1,45 +1,128 @@
 {
-  "generated_at": "2026-05-16 16:30:13",
+  "generated_at": "2026-05-16 23:30:12",
   "date": "2026-05-16",
   "screen_time": [
     {
       "user_id": "U001",
-      "total_seconds": 1260,
-      "total_minutes": 21.0
+      "total_seconds": 7018,
+      "total_minutes": 116.97
+    },
+    {
+      "user_id": "U000",
+      "total_seconds": 86,
+      "total_minutes": 1.43
     }
   ],
   "top_apps": [
     {
-      "app_name": "whatsapp",
-      "total_seconds": 210,
-      "total_minutes": 3.5,
+      "app_name": "apps",
+      "total_seconds": 2062,
+      "total_minutes": 34.37,
       "rank": 1
     },
     {
-      "app_name": "Mobile Usage Logger",
-      "total_seconds": 111,
-      "total_minutes": 1.85,
+      "app_name": "whatsapp",
+      "total_seconds": 1295,
+      "total_minutes": 21.58,
       "rank": 2
+    },
+    {
+      "app_name": "android",
+      "total_seconds": 637,
+      "total_minutes": 10.62,
+      "rank": 3
+    },
+    {
+      "app_name": "Clock",
+      "total_seconds": 327,
+      "total_minutes": 5.45,
+      "rank": 4
+    },
+    {
+      "app_name": "Mobile Usage Logger",
+      "total_seconds": 238,
+      "total_minutes": 3.97,
+      "rank": 5
     },
     {
       "app_name": "Package installer",
       "total_seconds": 29,
       "total_minutes": 0.48,
-      "rank": 3
+      "rank": 6
     },
     {
       "app_name": "Google Play Store",
       "total_seconds": 19,
       "total_minutes": 0.32,
-      "rank": 4
+      "rank": 7
+    },
+    {
+      "app_name": "musically",
+      "total_seconds": 11,
+      "total_minutes": 0.18,
+      "rank": 8
+    },
+    {
+      "app_name": "transsion",
+      "total_seconds": 5,
+      "total_minutes": 0.08,
+      "rank": 9
+    },
+    {
+      "app_name": "Media Storage",
+      "total_seconds": 3,
+      "total_minutes": 0.05,
+      "rank": 10
+    },
+    {
+      "app_name": "com",
+      "total_seconds": 3,
+      "total_minutes": 0.05,
+      "rank": 11
+    },
+    {
+      "app_name": "Permission controller",
+      "total_seconds": 2,
+      "total_minutes": 0.03,
+      "rank": 12
     }
   ],
   "hourly_patterns": [
     {
       "hour": "13",
       "label": "13:00-14:00",
-      "total_seconds": 1260,
-      "total_minutes": 21.0
+      "total_seconds": 1520,
+      "total_minutes": 25.33
+    },
+    {
+      "hour": "14",
+      "label": "14:00-15:00",
+      "total_seconds": 51,
+      "total_minutes": 0.85
+    },
+    {
+      "hour": "15",
+      "label": "15:00-16:00",
+      "total_seconds": 2095,
+      "total_minutes": 34.92
+    },
+    {
+      "hour": "16",
+      "label": "16:00-17:00",
+      "total_seconds": 2727,
+      "total_minutes": 45.45
+    },
+    {
+      "hour": "17",
+      "label": "17:00-18:00",
+      "total_seconds": 625,
+      "total_minutes": 10.42
+    },
+    {
+      "hour": "19",
+      "label": "19:00-20:00",
+      "total_seconds": 86,
+      "total_minutes": 1.43
     }
   ]
 }
