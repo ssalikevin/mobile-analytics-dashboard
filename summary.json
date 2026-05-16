@@ -1,0 +1,45 @@
+{
+  "generated_at": "2026-05-16 14:30:18",
+  "date": "2026-05-16",
+  "screen_time": [
+    {
+      "user_id": "U001",
+      "total_seconds": 3852,
+      "total_minutes": 64.2
+    }
+  ],
+  "top_apps": [
+    {
+      "app_name": "whatsapp",
+      "total_seconds": 1148,
+      "total_minutes": 19.13,
+      "rank": 1
+    },
+    {
+      "app_name": "kawogo",
+      "total_seconds": 674,
+      "total_minutes": 11.23,
+      "rank": 2
+    },
+    {
+      "app_name": "Mobile Usage Logger",
+      "total_seconds": 5,
+      "total_minutes": 0.08,
+      "rank": 3
+    }
+  ],
+  "hourly_patterns": [
+    {
+      "hour": "11",
+      "label": "11:00-12:00",
+      "total_seconds": 721,
+      "total_minutes": 12.02
+    },
+    {
+      "hour": "12",
+      "label": "12:00-13:00",
+      "total_seconds": 3131,
+      "total_minutes": 52.18
+    }
+  ]
+}

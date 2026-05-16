@@ -1,0 +1,14 @@
+# Never upload credentials to GitHub
+# Block credentials — NEVER upload these
+.streamlit/secrets.toml
+credentials/
+firebase-credentials.json
+learning-for-project*.json
+
+# Allow summary.json specifically
+!summary.json
+
+# Block compiled files
+__pycache__/
+*.pyc
+.env
