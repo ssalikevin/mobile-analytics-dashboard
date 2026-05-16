@@ -966,7 +966,7 @@ else:
                     color=df["min"],
                     colorscale=[[0, ACCENT_DIM], [1, ACCENT]],
                     line=dict(width=0),
-                    cornerradius=6,
+                    
                 ),
                 text=df["min"].astype(str) + "m",
                 textposition="outside",
@@ -997,7 +997,7 @@ else:
             fig2 = go.Figure(go.Bar(
                 y=df2["app_name"], x=df2["total_seconds"],
                 orientation="h",
-                marker=dict(color=clrs, line=dict(width=0), cornerradius=4),
+                marker=dict(color=clrs, line=dict(width=0)),
                 text=df2["min"].astype(str) + "m",
                 textposition="outside",
                 textfont=dict(size=10, color=TXT_BODY, family="JetBrains Mono"),
