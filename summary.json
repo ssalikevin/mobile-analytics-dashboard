@@ -1,45 +1,45 @@
 {
-  "generated_at": "2026-05-16 14:30:18",
+  "generated_at": "2026-05-16 15:30:12",
   "date": "2026-05-16",
   "screen_time": [
     {
       "user_id": "U001",
-      "total_seconds": 3852,
-      "total_minutes": 64.2
+      "total_seconds": 1260,
+      "total_minutes": 21.0
     }
   ],
   "top_apps": [
     {
       "app_name": "whatsapp",
-      "total_seconds": 1148,
-      "total_minutes": 19.13,
+      "total_seconds": 210,
+      "total_minutes": 3.5,
       "rank": 1
     },
     {
-      "app_name": "kawogo",
-      "total_seconds": 674,
-      "total_minutes": 11.23,
+      "app_name": "Mobile Usage Logger",
+      "total_seconds": 111,
+      "total_minutes": 1.85,
       "rank": 2
     },
     {
-      "app_name": "Mobile Usage Logger",
-      "total_seconds": 5,
-      "total_minutes": 0.08,
+      "app_name": "Package installer",
+      "total_seconds": 29,
+      "total_minutes": 0.48,
       "rank": 3
+    },
+    {
+      "app_name": "Google Play Store",
+      "total_seconds": 19,
+      "total_minutes": 0.32,
+      "rank": 4
     }
   ],
   "hourly_patterns": [
     {
-      "hour": "11",
-      "label": "11:00-12:00",
-      "total_seconds": 721,
-      "total_minutes": 12.02
-    },
-    {
-      "hour": "12",
-      "label": "12:00-13:00",
-      "total_seconds": 3131,
-      "total_minutes": 52.18
+      "hour": "13",
+      "label": "13:00-14:00",
+      "total_seconds": 1260,
+      "total_minutes": 21.0
     }
   ]
 }
