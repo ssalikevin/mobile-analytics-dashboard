@@ -741,20 +741,12 @@ with st.sidebar:
     selected_min = {"Last 5 minutes": 5, "Last hour": 60, "Last 24 hours": 1440}[time_filter]
 
     st.markdown(f'<div class="sb-label">User</div>', unsafe_allow_html=True)
-    # Build user list dynamically from live events
-    # Falls back to summary.json users if no live events
-    _live_names = sorted(set(
-        e.get("user_name", "").strip().lower()
-        for e in all_evs
-        if e.get("user_name", "").strip()
-    ))
-    _summary_names = sorted(set(
-        u.get("user_id", "").lower()
-        for u in (summary or {}).get("screen_time", [])
-        if u.get("user_id", "")
-    ))
-    _all_known = sorted(set(_live_names + _summary_names)) or ["no users yet"]
-    user_filter = st.selectbox("", ["All users"] + _all_known,
+    # Use cached user list from previous refresh cycle.
+    # On first load it shows only "All users".
+    # After first data fetch, session_state["known_users"] is populated
+    # and the dropdown shows all real users dynamically.
+    _known = st.session_state.get("known_users", [])
+    user_filter = st.selectbox("", ["All users"] + _known,
                                label_visibility="collapsed")
 
     # Refresh
@@ -786,6 +778,21 @@ with st.sidebar:
 firebase_db  = init_firebase()
 all_evs      = fetch_events(firebase_db, minutes=selected_min) if firebase_db else []
 summary      = load_summary()
+
+# Update known_users in session_state so sidebar dropdown stays dynamic
+_live_names_fresh = sorted(set(
+    e.get("user_name", "").strip().lower()
+    for e in all_evs
+    if e.get("user_name", "").strip()
+))
+_summary_names_fresh = sorted(set(
+    u.get("user_id", "").lower()
+    for u in (summary or {}).get("screen_time", [])
+    if u.get("user_id", "")
+))
+_combined = sorted(set(_live_names_fresh + _summary_names_fresh))
+if _combined:
+    st.session_state["known_users"] = _combined
 
 live_evs = all_evs if user_filter == "All users" else [
     e for e in all_evs if e.get("user_name", "").lower() == user_filter.lower()
