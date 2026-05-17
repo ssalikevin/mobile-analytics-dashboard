@@ -741,7 +741,20 @@ with st.sidebar:
     selected_min = {"Last 5 minutes": 5, "Last hour": 60, "Last 24 hours": 1440}[time_filter]
 
     st.markdown(f'<div class="sb-label">User</div>', unsafe_allow_html=True)
-    user_filter = st.selectbox("", ["All users", "kevin", "kintu", "travor", "olivia", "razal"],
+    # Build user list dynamically from live events
+    # Falls back to summary.json users if no live events
+    _live_names = sorted(set(
+        e.get("user_name", "").strip().lower()
+        for e in all_evs
+        if e.get("user_name", "").strip()
+    ))
+    _summary_names = sorted(set(
+        u.get("user_id", "").lower()
+        for u in (summary or {}).get("screen_time", [])
+        if u.get("user_id", "")
+    ))
+    _all_known = sorted(set(_live_names + _summary_names)) or ["no users yet"]
+    user_filter = st.selectbox("", ["All users"] + _all_known,
                                label_visibility="collapsed")
 
     # Refresh
@@ -824,7 +837,20 @@ col_users, col_feed = st.columns([5, 7], gap="large")
 
 # User status cards
 with col_users:
-    ALL = ["kevin", "kintu", "travor", "olivia", "razal"]
+    # ALL users = everyone seen in live events OR in HDFS summary
+    _seen_live = sorted(set(
+        e.get("user_name", "").strip().lower()
+        for e in all_evs
+        if e.get("user_name", "").strip()
+    ))
+    _seen_summary = sorted(set(
+        u.get("user_id", "").lower()
+        for u in (summary or {}).get("screen_time", [])
+        if u.get("user_id", "")
+    ))
+    ALL = sorted(set(_seen_live + _seen_summary))
+    if not ALL:
+        ALL = ["no users yet"]
     show = [user_filter.lower()] if user_filter != "All users" else ALL
 
     cards = ""
