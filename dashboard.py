@@ -143,7 +143,24 @@ setInterval(function() {
     document.querySelectorAll('[data-testid="manage-app-button"]').forEach(function(el) {
         el.style.display = 'none';
     });
+    // Hide all tooltips to prevent accidental sidebar toggle
+    document.querySelectorAll('[role="tooltip"]').forEach(function(el) {
+        el.style.display = 'none';
+    });
+    document.querySelectorAll('[data-baseweb="tooltip"]').forEach(function(el) {
+        el.style.display = 'none';
+    });
 }, 500);
+
+// Override the keyboard shortcut that toggles the sidebar
+// Streamlit uses '[' key to toggle sidebar - we disable it
+document.addEventListener('keydown', function(e) {
+    // Block '[' key which Streamlit uses to toggle sidebar
+    if (e.key === '[' || e.key === ']') {
+        e.stopPropagation();
+        e.preventDefault();
+    }
+}, true);
 </script>
 """
 
@@ -194,6 +211,20 @@ footer a { display: none !important; }
 button[data-testid="baseButton-header"] { display: none !important; }
 section[data-testid="stSidebar"] button[kind="header"] { display: none !important; }
 div[data-testid="stSidebarCollapsedControl"] { display: none !important; }
+
+/* Hide the keyboard shortcut tooltip that appears on hover */
+[data-testid="stSidebar"] [data-testid="stTooltipHoverTarget"] { display: none !important; }
+.tooltip { display: none !important; }
+[data-baseweb="tooltip"] { display: none !important; }
+[role="tooltip"] { display: none !important; }
+
+/* Hide the keyboard shortcut button/icon in sidebar header area */
+section[data-testid="stSidebar"] > div > div:first-child > div:first-child {
+    pointer-events: none !important;
+}
+/* The specific element containing keyboard shortcut hint */
+[data-testid="stSidebar"] span[class*="keyboard"] { display: none !important; }
+[data-testid="stSidebar"] div[class*="shortcut"] { display: none !important; }
 </style>
 """
 st.markdown(HIDE_CHROME, unsafe_allow_html=True)
