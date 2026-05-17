@@ -188,6 +188,12 @@ footer a { display: none !important; }
 /* Catch-all for any remaining Streamlit chrome */
 [data-testid="stDecoration"] { display: none !important; }
 .st-emotion-cache-uf99v8 { display: none !important; }
+
+/* Hide sidebar collapse/expand arrow - prevents accidental collapse */
+[data-testid="collapsedControl"] { display: none !important; }
+button[data-testid="baseButton-header"] { display: none !important; }
+section[data-testid="stSidebar"] button[kind="header"] { display: none !important; }
+div[data-testid="stSidebarCollapsedControl"] { display: none !important; }
 </style>
 """
 st.markdown(HIDE_CHROME, unsafe_allow_html=True)
@@ -823,6 +829,7 @@ KNOWN_ID_MAP = {
     "U003": "travor",
     "U004": "olivia",
     "U005": "razal",
+    "U006": "ollie",
 }
 # U000 is the default for any user NOT in the above map
 # Find who U000 actually is by checking live events for names not in KNOWN_ID_MAP

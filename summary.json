@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-17 13:30:15",
+  "generated_at": "2026-05-17 14:33:42",
   "date": "2026-05-17",
   "screen_time": [
     {
@@ -8,28 +8,28 @@
       "total_minutes": 116.97
     },
     {
-      "user_id": "U000",
+      "user_id": "U006",
       "total_seconds": 86,
       "total_minutes": 1.43
     }
   ],
   "top_apps": [
     {
-      "app_name": "apps",
-      "total_seconds": 2062,
-      "total_minutes": 34.37,
+      "app_name": "Photosgo",
+      "total_seconds": 1986,
+      "total_minutes": 33.1,
       "rank": 1
     },
     {
-      "app_name": "whatsapp",
-      "total_seconds": 1295,
-      "total_minutes": 21.58,
+      "app_name": "Upgrade",
+      "total_seconds": 1562,
+      "total_minutes": 26.03,
       "rank": 2
     },
     {
-      "app_name": "android",
-      "total_seconds": 637,
-      "total_minutes": 10.62,
+      "app_name": "W4b",
+      "total_seconds": 1295,
+      "total_minutes": 21.58,
       "rank": 3
     },
     {
@@ -39,52 +39,76 @@
       "rank": 4
     },
     {
-      "app_name": "Mobile Usage Logger",
+      "app_name": "Chrome",
+      "total_seconds": 309,
+      "total_minutes": 5.15,
+      "rank": 5
+    },
+    {
+      "app_name": "Calendar",
+      "total_seconds": 300,
+      "total_minutes": 5.0,
+      "rank": 6
+    },
+    {
+      "app_name": "Mobile usage logger",
       "total_seconds": 238,
       "total_minutes": 3.97,
-      "rank": 5
+      "rank": 7
+    },
+    {
+      "app_name": "Files",
+      "total_seconds": 85,
+      "total_minutes": 1.42,
+      "rank": 8
+    },
+    {
+      "app_name": "Messaging",
+      "total_seconds": 76,
+      "total_minutes": 1.27,
+      "rank": 9
     },
     {
       "app_name": "Package installer",
       "total_seconds": 29,
       "total_minutes": 0.48,
-      "rank": 6
-    },
-    {
-      "app_name": "Google Play Store",
-      "total_seconds": 19,
-      "total_minutes": 0.32,
-      "rank": 7
-    },
-    {
-      "app_name": "musically",
-      "total_seconds": 11,
-      "total_minutes": 0.18,
-      "rank": 8
-    },
-    {
-      "app_name": "transsion",
-      "total_seconds": 5,
-      "total_minutes": 0.08,
-      "rank": 9
-    },
-    {
-      "app_name": "Media Storage",
-      "total_seconds": 3,
-      "total_minutes": 0.05,
       "rank": 10
     },
     {
-      "app_name": "com",
+      "app_name": "Youtube",
+      "total_seconds": 28,
+      "total_minutes": 0.47,
+      "rank": 11
+    },
+    {
+      "app_name": "Google play store",
+      "total_seconds": 19,
+      "total_minutes": 0.32,
+      "rank": 12
+    },
+    {
+      "app_name": "Go",
+      "total_seconds": 11,
+      "total_minutes": 0.18,
+      "rank": 13
+    },
+    {
+      "app_name": "Media storage",
       "total_seconds": 3,
       "total_minutes": 0.05,
-      "rank": 11
+      "rank": 14
+    },
+    {
+      "app_name": "Whatsapp",
+      "total_seconds": 3,
+      "total_minutes": 0.05,
+      "rank": 15
     },
     {
       "app_name": "Permission controller",
       "total_seconds": 2,
       "total_minutes": 0.03,
-      "rank": 12
+      "rank": 16
     }
   ],
   "hourly_patterns": [
