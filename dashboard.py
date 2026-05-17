@@ -974,7 +974,7 @@ else:
                 xaxis=dict(showgrid=False, color=TXT_MUTED,
                            tickfont=dict(size=10, color=TXT_MUTED)),
                 yaxis=dict(showgrid=True, gridcolor=GRID, color=TXT_MUTED,
-                           title="minutes", titlefont=dict(size=10)),
+                           title=dict(text="minutes", font=dict(size=10))),
             )
             st.plotly_chart(fig, use_container_width=True,
                             config={"displayModeBar": False})
@@ -1007,7 +1007,7 @@ else:
                 font=dict(family="Inter", size=11, color=TXT_MUTED),
                 showlegend=False,
                 xaxis=dict(showgrid=True, gridcolor=GRID, color=TXT_MUTED,
-                           title="seconds", titlefont=dict(size=10)),
+                           title=dict(text="seconds", font=dict(size=10))),
                 yaxis=dict(showgrid=False, color=TXT_HEAD,
                            categoryorder="total ascending",
                            tickfont=dict(size=11, color=TXT_HEAD)),
@@ -1046,7 +1046,7 @@ else:
                 xaxis=dict(showgrid=False, color=TXT_MUTED,
                            tickfont=dict(size=9, color=TXT_MUTED), tickangle=-35),
                 yaxis=dict(showgrid=True, gridcolor=GRID, color=TXT_MUTED,
-                           title="minutes", titlefont=dict(size=10)),
+                           title=dict(text="minutes", font=dict(size=10))),
             )
             st.plotly_chart(fig3, use_container_width=True,
                             config={"displayModeBar": False})
