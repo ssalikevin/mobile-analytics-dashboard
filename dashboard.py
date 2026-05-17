@@ -139,25 +139,35 @@ header[data-testid="stHeader"] {
 .stApp { margin-top: 0 !important; }
 .block-container { padding-top: 1.5rem !important; }
 
-/* "Manage app" bottom-right button */
-[data-testid="manage-app-button"],
-.st-emotion-cache-h4xjwg,
-.streamlit-wide ._profileContainer_gzau3_53,
-button[kind="borderlessIcon"][aria-label*="Manage"],
-div[data-testid="stToolbar"],
-div.stToolbar,
-#stToolbar,
-.viewerBadge_container__r5tak,
-.viewerBadge_link__qRIco,
-footer,
-footer a,
-.footer {
-    display: none !important;
-    visibility: hidden !important;
-}
+/* Hide ALL Streamlit developer UI elements */
+/* Manage app button - multiple selectors for different Streamlit versions */
+[data-testid="manage-app-button"] { display: none !important; }
+[data-testid="stToolbar"] { display: none !important; }
+.st-emotion-cache-h4xjwg { display: none !important; }
+.st-emotion-cache-zq5wmm { display: none !important; }
+.st-emotion-cache-1dp5vir { display: none !important; }
 
-/* "Made with Streamlit" & hosted badge */
-#MainMenu { visibility: hidden !important; }
+/* Bottom-right fixed position buttons (Manage app lives here) */
+div[class*="toolbar"] { display: none !important; }
+div[class*="Toolbar"] { display: none !important; }
+button[aria-label="Manage app"] { display: none !important; }
+button[title="Manage app"] { display: none !important; }
+
+/* Any fixed element in bottom-right corner */
+div[style*="bottom: 1rem"][style*="right"] { display: none !important; }
+div[style*="position: fixed"][style*="bottom"] { display: none !important; }
+
+/* Footer and badges */
+footer { display: none !important; }
+footer a { display: none !important; }
+.footer { display: none !important; }
+.viewerBadge_container__r5tak { display: none !important; }
+.viewerBadge_link__qRIco { display: none !important; }
+#MainMenu { display: none !important; visibility: hidden !important; }
+
+/* Catch-all for any remaining Streamlit chrome */
+[data-testid="stDecoration"] { display: none !important; }
+.st-emotion-cache-uf99v8 { display: none !important; }
 </style>
 """
 st.markdown(HIDE_CHROME, unsafe_allow_html=True)
@@ -771,7 +781,7 @@ with st.sidebar:
     st.markdown(f"""
     <div style="margin-top:1rem;font-size:0.7rem;
                 font-family:'JetBrains Mono',monospace;color:{TXT_FAINT}">
-        {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+        {datetime.now().strftime('%Y-%m-%d %I:%M:%S %p')} EAT
     </div>
     """, unsafe_allow_html=True)
 
@@ -782,13 +792,32 @@ firebase_db  = init_firebase()
 all_evs      = fetch_events(firebase_db, minutes=selected_min) if firebase_db else []
 summary      = load_summary()
 
-# Build user_id → name map from live events (e.g. U001 → kevin)
-uid_to_name = {}
+# Known user_id → name mapping (mirrors ingest_firebase.py USER_ID_MAP)
+# Firebase events have user_name but NOT user_id
+# summary.json has user_id but NOT user_name
+# We bridge them using this map + names seen in live events
+KNOWN_ID_MAP = {
+    "U001": "kevin",
+    "U002": "kintu",
+    "U003": "travor",
+    "U004": "olivia",
+    "U005": "razal",
+}
+# Also build reverse: name → uid (for any user seen in live events)
+name_to_uid = {v: k for k, v in KNOWN_ID_MAP.items()}
+
+# Add any new names seen in live events dynamically
 for _e in all_evs:
     _uname = _e.get("user_name", "").strip().lower()
-    _uid   = _e.get("user_id",   "").strip().upper()
-    if _uname and _uid and _uid not in uid_to_name:
-        uid_to_name[_uid] = _uname
+    if _uname and _uname not in name_to_uid:
+        # Assign a dynamic ID for unknown users based on their name
+        name_to_uid[_uname] = f"U{abs(hash(_uname)) % 900 + 100}"
+
+# Full uid → name map (known + dynamic)
+uid_to_name = {**KNOWN_ID_MAP}
+for _name, _uid in name_to_uid.items():
+    if _uid not in uid_to_name:
+        uid_to_name[_uid] = _name
 
 # Update known_users in session_state so sidebar dropdown stays dynamic
 _live_names_fresh = sorted(set(
@@ -837,7 +866,7 @@ with m1: st.metric("Active Users", f"{active_count} / {max(_total_known, active_
 with m2: st.metric("Live Events",     f"{len(live_evs):,}")
 with m3: st.metric("Screen Time",     f"{round(total_secs/60,1)} min")
 with m4: st.metric("Apps Tracked",    str(total_apps))
-with m5: st.metric("Updated (UTC)", datetime.utcnow().strftime("%H:%M:%S"))
+with m5: st.metric("Updated (UTC)", datetime.utcnow().strftime("%I:%M:%S %p"))
 
 st.markdown("<div style='height:1.2rem'></div>", unsafe_allow_html=True)
 
@@ -933,7 +962,7 @@ with col_feed:
 
             rows += f"""
             <div class="ev-row">
-                <span class="ev-time">{ts.strftime('%H:%M:%S')}</span>
+                <span class="ev-time">{ts.strftime('%I:%M %p')}</span>
                 <div class="ev-avatar">{initials}</div>
                 <span class="ev-text">{uname} {desc}</span>
                 <span class="ev-pill {pill_cls}">{etype}</span>
