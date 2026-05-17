@@ -206,25 +206,28 @@ footer a { display: none !important; }
 [data-testid="stDecoration"] { display: none !important; }
 .st-emotion-cache-uf99v8 { display: none !important; }
 
-/* Hide sidebar collapse/expand arrow - prevents accidental collapse */
-[data-testid="collapsedControl"] { display: none !important; }
-button[data-testid="baseButton-header"] { display: none !important; }
-section[data-testid="stSidebar"] button[kind="header"] { display: none !important; }
-div[data-testid="stSidebarCollapsedControl"] { display: none !important; }
-
-/* Hide the keyboard shortcut tooltip that appears on hover */
-[data-testid="stSidebar"] [data-testid="stTooltipHoverTarget"] { display: none !important; }
-.tooltip { display: none !important; }
-[data-baseweb="tooltip"] { display: none !important; }
-[role="tooltip"] { display: none !important; }
-
-/* Hide the keyboard shortcut button/icon in sidebar header area */
-section[data-testid="stSidebar"] > div > div:first-child > div:first-child {
-    pointer-events: none !important;
+/* ── Sidebar visibility: ALWAYS show the sidebar ── */
+/* Make sure the sidebar is always fully visible and interactive */
+[data-testid="stSidebar"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
 }
-/* The specific element containing keyboard shortcut hint */
-[data-testid="stSidebar"] span[class*="keyboard"] { display: none !important; }
-[data-testid="stSidebar"] div[class*="shortcut"] { display: none !important; }
+[data-testid="stSidebar"] * {
+    pointer-events: auto !important;
+}
+
+/* Hide ONLY the collapse arrow button (the < arrow inside the sidebar) */
+/* We keep the expand button (> arrow on left edge) visible so user can always reopen */
+[data-testid="stSidebarContent"] > div:first-child > button { 
+    display: none !important; 
+}
+
+/* Hide keyboard shortcut tooltip text only - not the button itself */
+[data-testid="stSidebar"] [data-testid="stTooltipHoverTarget"] span { 
+    display: none !important; 
+}
 </style>
 """
 st.markdown(HIDE_CHROME, unsafe_allow_html=True)
