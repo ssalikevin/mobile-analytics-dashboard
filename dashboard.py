@@ -670,11 +670,13 @@ def fetch_events(db, minutes=60):
         raw = fdb.reference("events").get()
         if not raw:
             return []
-        events, cutoff = [], datetime.now() - timedelta(minutes=minutes)
+        cutoff = datetime.now() - timedelta(minutes=minutes)
+        events = []
         for k, ev in raw.items():
             try:
                 ts = datetime.strptime(ev.get("timestamp", ""), "%Y-%m-%d %H:%M:%S")
-                if ts >= cutoff:
+                # Include event if within time window OR if All time (minutes >= 9999)
+                if ts >= cutoff or minutes >= 9999:
                     ev["_dt"] = ts
                     events.append(ev)
             except Exception:
@@ -685,7 +687,7 @@ def fetch_events(db, minutes=60):
         return []
 
 
-def user_status(events, idle_min=5):
+def user_status(events, idle_min=30):
     now, seen = datetime.now(), {}
     for ev in events:
         u = ev.get("user_name", "?").lower()
@@ -737,9 +739,9 @@ with st.sidebar:
 
     # Filters
     st.markdown(f'<div class="sb-label">Time Range</div>', unsafe_allow_html=True)
-    time_filter = st.selectbox("", ["Last 5 minutes", "Last hour", "Last 24 hours"],
-                               index=1, label_visibility="collapsed")
-    selected_min = {"Last 5 minutes": 5, "Last hour": 60, "Last 24 hours": 1440}[time_filter]
+    time_filter = st.selectbox("", ["Last hour", "Last 6 hours", "Last 24 hours", "All time"],
+                               index=2, label_visibility="collapsed")
+    selected_min = {"Last hour": 60, "Last 6 hours": 360, "Last 24 hours": 1440, "All time": 99999}[time_filter]
 
     st.markdown(f'<div class="sb-label">User</div>', unsafe_allow_html=True)
     # Use cached user list from previous refresh cycle.
@@ -830,11 +832,12 @@ st.markdown(f"""
 # ── METRICS ────────────────────────────────────────────────────────────────────
 
 m1, m2, m3, m4, m5 = st.columns(5)
-with m1: st.metric("Active Users",    f"{active_count} / 5")
+_total_known = len(st.session_state.get("known_users", [])) or len(ALL) if "ALL" in dir() else 5
+with m1: st.metric("Active Users", f"{active_count} / {max(_total_known, active_count)}")
 with m2: st.metric("Live Events",     f"{len(live_evs):,}")
 with m3: st.metric("Screen Time",     f"{round(total_secs/60,1)} min")
 with m4: st.metric("Apps Tracked",    str(total_apps))
-with m5: st.metric("Updated",         datetime.now().strftime("%H:%M:%S"))
+with m5: st.metric("Updated (UTC)", datetime.utcnow().strftime("%H:%M:%S"))
 
 st.markdown("<div style='height:1.2rem'></div>", unsafe_allow_html=True)
 
