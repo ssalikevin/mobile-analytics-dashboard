@@ -167,6 +167,7 @@ st.markdown(HIDE_CHROME, unsafe_allow_html=True)
 st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 /* ── Root ── */
 .stApp {{
@@ -779,6 +780,14 @@ firebase_db  = init_firebase()
 all_evs      = fetch_events(firebase_db, minutes=selected_min) if firebase_db else []
 summary      = load_summary()
 
+# Build user_id → name map from live events (e.g. U001 → kevin)
+uid_to_name = {}
+for _e in all_evs:
+    _uname = _e.get("user_name", "").strip().lower()
+    _uid   = _e.get("user_id",   "").strip().upper()
+    if _uname and _uid and _uid not in uid_to_name:
+        uid_to_name[_uid] = _uname
+
 # Update known_users in session_state so sidebar dropdown stays dynamic
 _live_names_fresh = sorted(set(
     e.get("user_name", "").strip().lower()
@@ -786,7 +795,7 @@ _live_names_fresh = sorted(set(
     if e.get("user_name", "").strip()
 ))
 _summary_names_fresh = sorted(set(
-    u.get("user_id", "").lower()
+    uid_to_name.get(u.get("user_id","").upper(), u.get("user_id","").lower())
     for u in (summary or {}).get("screen_time", [])
     if u.get("user_id", "")
 ))
@@ -988,8 +997,13 @@ else:
         if sd:
             df = pd.DataFrame(sd)
             df["min"] = (df["total_seconds"] / 60).round(1)
+            # Map user_id to name for display
+            df["display"] = df["user_id"].apply(
+                lambda uid: f'{uid_to_name.get(uid.upper(), uid)}\n({uid})'
+                if uid_to_name.get(uid.upper()) else uid
+            )
             fig = go.Figure(go.Bar(
-                x=df["user_id"], y=df["min"],
+                x=df["display"], y=df["min"],
                 marker=dict(color=df["min"],
                             colorscale=[[0, ACCENT_DIM], [1, ACCENT]],
                             line=dict(width=0)),
@@ -1097,10 +1111,15 @@ else:
 
     raw_sd = summary.get("screen_time", [])
     if raw_sd:
-        dft = pd.DataFrame(raw_sd).rename(columns={
-            "user_id": "User", "total_seconds": "Seconds", "total_minutes": "Minutes"
+        dft = pd.DataFrame(raw_sd)
+        dft["Name"] = dft["user_id"].apply(
+            lambda uid: uid_to_name.get(uid.upper(), "Unknown")
+        )
+        dft = dft.rename(columns={
+            "user_id": "User ID", "total_seconds": "Seconds", "total_minutes": "Minutes"
         })
         dft["Hours"] = (dft["Seconds"] / 3600).round(3)
+        dft = dft[["User ID", "Name", "Seconds", "Minutes", "Hours"]]
         st.dataframe(dft, use_container_width=True, hide_index=True)
 
 
