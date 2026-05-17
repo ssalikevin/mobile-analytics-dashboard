@@ -939,18 +939,13 @@ else:
 
     c1, c2, c3 = st.columns(3, gap="medium")
 
-    def chart_layout(title=""):
-        return dict(
-            template=PLOTLY_T,
-            height=270,
-            margin=dict(t=15, b=35, l=10, r=10),
-            paper_bgcolor=CHART_BG,
-            plot_bgcolor=CHART_BG,
-            font=dict(family="Inter", size=11, color=TXT_MUTED),
-            title=dict(text=title, font=dict(size=11, color=TXT_MUTED),
-                       x=0, xanchor="left", pad=dict(b=8)) if title else {},
-            showlegend=False,
-        )
+    BLAYOUT = dict(
+        template=PLOTLY_T, height=270,
+        margin=dict(t=15, b=35, l=10, r=10),
+        paper_bgcolor=CHART_BG, plot_bgcolor=CHART_BG,
+        font=dict(family="Inter", size=11, color=TXT_MUTED),
+        showlegend=False,
+    )
 
     # Chart 1 — Screen Time
     with c1:
@@ -962,25 +957,27 @@ else:
             df["min"] = (df["total_seconds"] / 60).round(1)
             fig = go.Figure(go.Bar(
                 x=df["user_id"], y=df["min"],
-                marker=dict(
-                    color=df["min"],
-                    colorscale=[[0, ACCENT_DIM], [1, ACCENT]],
-                    line=dict(width=0),
-                    
-                ),
+                marker=dict(color=df["min"],
+                            colorscale=[[0, ACCENT_DIM], [1, ACCENT]],
+                            line=dict(width=0)),
                 text=df["min"].astype(str) + "m",
                 textposition="outside",
                 textfont=dict(size=10, color=TXT_BODY, family="JetBrains Mono"),
                 hovertemplate="<b>%{x}</b><br>%{y} min<extra></extra>"
             ))
-            lo = chart_layout()
-            lo.update(dict(
-                xaxis=dict(showgrid=False, color=TXT_MUTED, tickfont=dict(size=10)),
+            fig.update_layout(
+                template=PLOTLY_T, height=270,
+                margin=dict(t=15, b=35, l=10, r=10),
+                paper_bgcolor=CHART_BG, plot_bgcolor=CHART_BG,
+                font=dict(family="Inter", size=11, color=TXT_MUTED),
+                showlegend=False,
+                xaxis=dict(showgrid=False, color=TXT_MUTED,
+                           tickfont=dict(size=10, color=TXT_MUTED)),
                 yaxis=dict(showgrid=True, gridcolor=GRID, color=TXT_MUTED,
                            title="minutes", titlefont=dict(size=10)),
-            ))
-            fig.update_layout(**lo)
-            st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
+            )
+            st.plotly_chart(fig, use_container_width=True,
+                            config={"displayModeBar": False})
         else:
             st.markdown('<div class="empty">No data yet</div>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
@@ -1003,16 +1000,20 @@ else:
                 textfont=dict(size=10, color=TXT_BODY, family="JetBrains Mono"),
                 hovertemplate="<b>%{y}</b><br>%{x}s<extra></extra>"
             ))
-            lo2 = chart_layout()
-            lo2.update(dict(
+            fig2.update_layout(
+                template=PLOTLY_T, height=270,
+                margin=dict(t=15, b=35, l=10, r=10),
+                paper_bgcolor=CHART_BG, plot_bgcolor=CHART_BG,
+                font=dict(family="Inter", size=11, color=TXT_MUTED),
+                showlegend=False,
                 xaxis=dict(showgrid=True, gridcolor=GRID, color=TXT_MUTED,
                            title="seconds", titlefont=dict(size=10)),
                 yaxis=dict(showgrid=False, color=TXT_HEAD,
                            categoryorder="total ascending",
                            tickfont=dict(size=11, color=TXT_HEAD)),
-            ))
-            fig2.update_layout(**lo2)
-            st.plotly_chart(fig2, use_container_width=True, config={"displayModeBar": False})
+            )
+            st.plotly_chart(fig2, use_container_width=True,
+                            config={"displayModeBar": False})
         else:
             st.markdown('<div class="empty">No data yet</div>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
@@ -1036,15 +1037,19 @@ else:
                 fillcolor=ACCENT_GLOW,
                 hovertemplate="<b>%{x}</b><br>%{y} min<extra></extra>"
             ))
-            lo3 = chart_layout()
-            lo3.update(dict(
+            fig3.update_layout(
+                template=PLOTLY_T, height=270,
+                margin=dict(t=15, b=35, l=10, r=10),
+                paper_bgcolor=CHART_BG, plot_bgcolor=CHART_BG,
+                font=dict(family="Inter", size=11, color=TXT_MUTED),
+                showlegend=False,
                 xaxis=dict(showgrid=False, color=TXT_MUTED,
-                           tickfont=dict(size=9), tickangle=-35),
+                           tickfont=dict(size=9, color=TXT_MUTED), tickangle=-35),
                 yaxis=dict(showgrid=True, gridcolor=GRID, color=TXT_MUTED,
                            title="minutes", titlefont=dict(size=10)),
-            ))
-            fig3.update_layout(**lo3)
-            st.plotly_chart(fig3, use_container_width=True, config={"displayModeBar": False})
+            )
+            st.plotly_chart(fig3, use_container_width=True,
+                            config={"displayModeBar": False})
         else:
             st.markdown('<div class="empty">No data yet</div>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
