@@ -128,6 +128,26 @@ else:
 #        top-right toolbar, manage app footer, made-with-streamlit
 
 HIDE_CHROME = """
+<script>
+// Remove Manage app button via JavaScript since CSS class names change
+setInterval(function() {
+    // Find by text content
+    document.querySelectorAll('button').forEach(function(btn) {
+        if (btn.textContent.trim() === 'Manage app' || 
+            btn.getAttribute('aria-label') === 'Manage app') {
+            btn.parentElement.style.display = 'none';
+            btn.style.display = 'none';
+        }
+    });
+    // Find the fixed bottom-right container
+    document.querySelectorAll('[data-testid="manage-app-button"]').forEach(function(el) {
+        el.style.display = 'none';
+    });
+}, 500);
+</script>
+"""
+
+HIDE_CHROME2 = """
 <style>
 /* Top toolbar (running man, stop, deploy, 3-dot menu) */
 header[data-testid="stHeader"] {
@@ -171,6 +191,7 @@ footer a { display: none !important; }
 </style>
 """
 st.markdown(HIDE_CHROME, unsafe_allow_html=True)
+st.markdown(HIDE_CHROME2, unsafe_allow_html=True)
 
 # ── FULL THEME CSS ─────────────────────────────────────────────────────────────
 
@@ -240,7 +261,7 @@ st.markdown(f"""
 }}
 [data-testid="stMetricValue"] div {{
     color: {TXT_HEAD} !important;
-    font-size: 1.85rem !important;
+    font-size: 1.35rem !important;
     font-weight: 700 !important;
     font-family: 'JetBrains Mono', monospace !important;
     line-height: 1.15 !important;
@@ -803,6 +824,20 @@ KNOWN_ID_MAP = {
     "U004": "olivia",
     "U005": "razal",
 }
+# U000 is the default for any user NOT in the above map
+# Find who U000 actually is by checking live events for names not in KNOWN_ID_MAP
+_known_names = set(KNOWN_ID_MAP.values())
+_unknown_names = [
+    e.get("user_name","").strip().lower()
+    for e in all_evs
+    if e.get("user_name","").strip().lower() not in _known_names
+    and e.get("user_name","").strip()
+]
+if _unknown_names:
+    # Most common unknown name is most likely U000
+    from collections import Counter
+    _most_common = Counter(_unknown_names).most_common(1)[0][0]
+    KNOWN_ID_MAP["U000"] = _most_common
 # Also build reverse: name → uid (for any user seen in live events)
 name_to_uid = {v: k for k, v in KNOWN_ID_MAP.items()}
 
@@ -891,14 +926,17 @@ with col_users:
         for e in all_evs
         if e.get("user_name", "").strip()
     ))
+    # Resolve summary user IDs to names using uid_to_name map
     _seen_summary = sorted(set(
-        u.get("user_id", "").lower()
+        uid_to_name.get(u.get("user_id","").upper(), u.get("user_id","").lower())
         for u in (summary or {}).get("screen_time", [])
         if u.get("user_id", "")
     ))
     ALL = sorted(set(_seen_live + _seen_summary))
+    # Remove raw IDs (U000, U001 etc) that got resolved to names
+    ALL = [u for u in ALL if not (u.startswith("u0") and len(u) == 4)]
     if not ALL:
-        ALL = ["no users yet"]
+        ALL = ["no data yet"]
     show = [user_filter.lower()] if user_filter != "All users" else ALL
 
     cards = ""
@@ -948,7 +986,12 @@ with col_feed:
             uname    = ev.get("user_name", "?").capitalize()
             initials = uname[:2].upper()
             pkg      = ev.get("app_name", "unknown")
-            app      = pkg.split(".")[-2].capitalize() if "." in pkg else pkg.capitalize()
+            # Better package name parsing
+            # com.whatsapp.w4b → WhatsApp
+            # com.google.android.apps.maps → Maps  
+            parts = [p for p in pkg.split(".") if p not in 
+                     ("com","org","net","android","google","apps","app","mobile","phone")]
+            app = (parts[-1] if parts else pkg).replace("_","-").capitalize()
             etype    = ev.get("event_type", "").upper()
             dur      = ev.get("duration_seconds", 0)
             pill_cls = "open" if etype == "OPEN" else "close"
