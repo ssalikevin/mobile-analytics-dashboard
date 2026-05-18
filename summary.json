@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-05-18 23:30:21",
-  "date": "2026-05-18",
+  "generated_at": "2026-05-19 00:30:22",
+  "date": "2026-05-19",
   "screen_time": [
     {
-      "user_id": "U610",
+      "user_id": "U639",
       "total_seconds": 51228,
       "total_minutes": 853.8
     },
     {
       "user_id": "U001",
-      "total_seconds": 42205,
-      "total_minutes": 703.42
+      "total_seconds": 44368,
+      "total_minutes": 739.47
     },
     {
       "user_id": "U003",
@@ -43,21 +43,21 @@
       "rank": 3
     },
     {
+      "app_name": "W4b",
+      "total_seconds": 7510,
+      "total_minutes": 125.17,
+      "rank": 4
+    },
+    {
       "app_name": "Chrome",
       "total_seconds": 7235,
       "total_minutes": 120.58,
-      "rank": 4
+      "rank": 5
     },
     {
       "app_name": "Chatgpt",
       "total_seconds": 7004,
       "total_minutes": 116.73,
-      "rank": 5
-    },
-    {
-      "app_name": "W4b",
-      "total_seconds": 6794,
-      "total_minutes": 113.23,
       "rank": 6
     },
     {
@@ -68,8 +68,8 @@
     },
     {
       "app_name": "Upgrade",
-      "total_seconds": 4309,
-      "total_minutes": 71.82,
+      "total_seconds": 4967,
+      "total_minutes": 82.78,
       "rank": 8
     },
     {
@@ -86,8 +86,8 @@
     },
     {
       "app_name": "Photosgo",
-      "total_seconds": 2318,
-      "total_minutes": 38.63,
+      "total_seconds": 2332,
+      "total_minutes": 38.87,
       "rank": 11
     },
     {
@@ -122,8 +122,8 @@
     },
     {
       "app_name": "Clock",
-      "total_seconds": 1232,
-      "total_minutes": 20.53,
+      "total_seconds": 1265,
+      "total_minutes": 21.08,
       "rank": 17
     },
     {
@@ -140,50 +140,50 @@
     },
     {
       "app_name": "Mobile usage logger",
-      "total_seconds": 629,
-      "total_minutes": 10.48,
+      "total_seconds": 702,
+      "total_minutes": 11.7,
       "rank": 20
+    },
+    {
+      "app_name": "Google play store",
+      "total_seconds": 687,
+      "total_minutes": 11.45,
+      "rank": 21
     },
     {
       "app_name": "Instagram",
       "total_seconds": 620,
       "total_minutes": 10.33,
-      "rank": 21
+      "rank": 22
     },
     {
       "app_name": "Maps",
       "total_seconds": 510,
       "total_minutes": 8.5,
-      "rank": 22
+      "rank": 23
     },
     {
       "app_name": "Messages",
       "total_seconds": 474,
       "total_minutes": 7.9,
-      "rank": 23
+      "rank": 24
     },
     {
       "app_name": "Searchlite",
       "total_seconds": 461,
       "total_minutes": 7.68,
-      "rank": 24
+      "rank": 25
     },
     {
       "app_name": "Calendar",
-      "total_seconds": 421,
-      "total_minutes": 7.02,
-      "rank": 25
+      "total_seconds": 438,
+      "total_minutes": 7.3,
+      "rank": 26
     },
     {
       "app_name": "Caller",
       "total_seconds": 410,
       "total_minutes": 6.83,
-      "rank": 26
-    },
-    {
-      "app_name": "Google play store",
-      "total_seconds": 396,
-      "total_minutes": 6.6,
       "rank": 27
     },
     {
@@ -218,129 +218,153 @@
     },
     {
       "app_name": "Messaging",
-      "total_seconds": 146,
-      "total_minutes": 2.43,
+      "total_seconds": 163,
+      "total_minutes": 2.72,
       "rank": 33
     },
     {
-      "app_name": "Audioplayer",
-      "total_seconds": 103,
-      "total_minutes": 1.72,
+      "app_name": "Files",
+      "total_seconds": 135,
+      "total_minutes": 2.25,
       "rank": 34
+    },
+    {
+      "app_name": "Audioplayer",
+      "total_seconds": 115,
+      "total_minutes": 1.92,
+      "rank": 35
     },
     {
       "app_name": "Claude",
       "total_seconds": 101,
       "total_minutes": 1.68,
-      "rank": 35
+      "rank": 36
     },
     {
       "app_name": "Tachyon",
       "total_seconds": 92,
       "total_minutes": 1.53,
-      "rank": 36
+      "rank": 37
     },
     {
-      "app_name": "Files",
-      "total_seconds": 85,
-      "total_minutes": 1.42,
-      "rank": 37
+      "app_name": "Camera",
+      "total_seconds": 80,
+      "total_minutes": 1.33,
+      "rank": 38
+    },
+    {
+      "app_name": "Discord",
+      "total_seconds": 67,
+      "total_minutes": 1.12,
+      "rank": 39
+    },
+    {
+      "app_name": "Contacts",
+      "total_seconds": 65,
+      "total_minutes": 1.08,
+      "rank": 40
     },
     {
       "app_name": "Statussaver",
       "total_seconds": 64,
       "total_minutes": 1.07,
-      "rank": 38
+      "rank": 41
     },
     {
       "app_name": "Phone services",
       "total_seconds": 63,
       "total_minutes": 1.05,
-      "rank": 39
+      "rank": 42
     },
     {
       "app_name": "Shazam",
       "total_seconds": 61,
       "total_minutes": 1.02,
-      "rank": 40
-    },
-    {
-      "app_name": "Contacts",
-      "total_seconds": 54,
-      "total_minutes": 0.9,
-      "rank": 41
+      "rank": 43
     },
     {
       "app_name": "Elmahousingfinanceug",
       "total_seconds": 40,
       "total_minutes": 0.67,
-      "rank": 42
+      "rank": 44
     },
     {
       "app_name": "Package installer",
       "total_seconds": 32,
       "total_minutes": 0.53,
-      "rank": 43
+      "rank": 45
     },
     {
       "app_name": "Call settings",
       "total_seconds": 31,
       "total_minutes": 0.52,
-      "rank": 44
+      "rank": 46
     },
     {
       "app_name": "Permission controller",
       "total_seconds": 31,
       "total_minutes": 0.52,
-      "rank": 45
+      "rank": 47
+    },
+    {
+      "app_name": "Downloads",
+      "total_seconds": 25,
+      "total_minutes": 0.42,
+      "rank": 48
+    },
+    {
+      "app_name": "Notebook",
+      "total_seconds": 20,
+      "total_minutes": 0.33,
+      "rank": 49
     },
     {
       "app_name": "Storysaver",
       "total_seconds": 17,
       "total_minutes": 0.28,
-      "rank": 46
-    },
-    {
-      "app_name": "Camera",
-      "total_seconds": 15,
-      "total_minutes": 0.25,
-      "rank": 47
+      "rank": 50
     },
     {
       "app_name": "Moffice eng",
       "total_seconds": 13,
       "total_minutes": 0.22,
-      "rank": 48
+      "rank": 51
+    },
+    {
+      "app_name": "Wow fm",
+      "total_seconds": 13,
+      "total_minutes": 0.22,
+      "rank": 52
     },
     {
       "app_name": "Intentresolver",
       "total_seconds": 7,
       "total_minutes": 0.12,
-      "rank": 49
+      "rank": 53
     },
     {
       "app_name": "System ui",
       "total_seconds": 4,
       "total_minutes": 0.07,
-      "rank": 50
+      "rank": 54
     },
     {
       "app_name": "Media storage",
       "total_seconds": 3,
       "total_minutes": 0.05,
-      "rank": 51
+      "rank": 55
     },
     {
       "app_name": "Photopicker",
       "total_seconds": 2,
       "total_minutes": 0.03,
-      "rank": 52
+      "rank": 56
     },
     {
       "app_name": "Mtp application",
       "total_seconds": 1,
       "total_minutes": 0.02,
-      "rank": 53
+      "rank": 57
     }
   ],
   "hourly_patterns": [
@@ -485,8 +509,8 @@
     {
       "hour": "23",
       "label": "23:00-24:00",
-      "total_seconds": 1119,
-      "total_minutes": 18.65
+      "total_seconds": 3282,
+      "total_minutes": 54.7
     }
   ]
 }
