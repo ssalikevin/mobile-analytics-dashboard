@@ -155,12 +155,24 @@ setInterval(function() {
 // Override the keyboard shortcut that toggles the sidebar
 // Streamlit uses '[' key to toggle sidebar - we disable it
 document.addEventListener('keydown', function(e) {
-    // Block '[' key which Streamlit uses to toggle sidebar
     if (e.key === '[' || e.key === ']') {
         e.stopPropagation();
         e.preventDefault();
     }
 }, true);
+
+// Force sidebar to always be visible - override any translateX collapse
+setInterval(function() {
+    var sidebar = document.querySelector('section[data-testid="stSidebar"]');
+    if (sidebar) {
+        sidebar.style.setProperty('transform', 'translateX(0px)', 'important');
+        sidebar.style.setProperty('min-width', '240px', 'important');
+        sidebar.style.setProperty('max-width', '280px', 'important');
+        sidebar.style.setProperty('visibility', 'visible', 'important');
+        sidebar.style.setProperty('opacity', '1', 'important');
+        sidebar.style.setProperty('display', 'block', 'important');
+    }
+}, 300);
 </script>
 """
 
@@ -206,28 +218,32 @@ footer a { display: none !important; }
 [data-testid="stDecoration"] { display: none !important; }
 .st-emotion-cache-uf99v8 { display: none !important; }
 
-/* ── Sidebar visibility: ALWAYS show the sidebar ── */
-/* Make sure the sidebar is always fully visible and interactive */
+/* ── Sidebar: force it to always be visible and in correct position ── */
 [data-testid="stSidebar"] {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
     pointer-events: auto !important;
+    transform: none !important;
+    min-width: 240px !important;
+    max-width: 280px !important;
+    width: 260px !important;
+    position: relative !important;
+    left: 0 !important;
 }
 [data-testid="stSidebar"] * {
     pointer-events: auto !important;
+    visibility: visible !important;
+}
+/* Ensure the sidebar section is never pushed off screen */
+section[data-testid="stSidebar"] {
+    transform: translateX(0px) !important;
+    min-width: 240px !important;
+    max-width: 280px !important;
 }
 
-/* Hide ONLY the collapse arrow button (the < arrow inside the sidebar) */
-/* We keep the expand button (> arrow on left edge) visible so user can always reopen */
-[data-testid="stSidebarContent"] > div:first-child > button { 
-    display: none !important; 
-}
-
-/* Hide keyboard shortcut tooltip text only - not the button itself */
-[data-testid="stSidebar"] [data-testid="stTooltipHoverTarget"] span { 
-    display: none !important; 
-}
+/* Sidebar toggle buttons: leave ALL buttons visible so sidebar can always be opened/closed */
+/* Do NOT hide any buttons inside stSidebarContent - it breaks the toggle */
 </style>
 """
 st.markdown(HIDE_CHROME, unsafe_allow_html=True)
