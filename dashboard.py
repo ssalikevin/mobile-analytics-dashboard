@@ -81,6 +81,7 @@ if D:
     BTN_FG           = "#0D1117"
     BTN_ICON         = "☀️"
     BTN_LABEL        = "Light Mode"
+    PAGE_COLOR       = "#0d1117"   # Plain hex for Plotly (not gradient)
 
 else:
     # ── LIGHT PALETTE ──
@@ -122,6 +123,7 @@ else:
     BTN_FG           = "#FFFFFF"
     BTN_ICON         = "🌙"
     BTN_LABEL        = "Dark Mode"
+    PAGE_COLOR       = "#e8ecf1"   # Plain hex for Plotly (not gradient)
 
 # ── HIDE STREAMLIT CHROME ──────────────────────────────────────────────────────
 # Hides: running man, stop button, deploy button,
@@ -161,18 +163,23 @@ document.addEventListener('keydown', function(e) {
     }
 }, true);
 
-// Force sidebar to always be visible - override any translateX collapse
+// Force sidebar to always stay expanded
 setInterval(function() {
     var sidebar = document.querySelector('section[data-testid="stSidebar"]');
     if (sidebar) {
-        sidebar.style.setProperty('transform', 'translateX(0px)', 'important');
-        sidebar.style.setProperty('min-width', '240px', 'important');
-        sidebar.style.setProperty('max-width', '280px', 'important');
-        sidebar.style.setProperty('visibility', 'visible', 'important');
-        sidebar.style.setProperty('opacity', '1', 'important');
-        sidebar.style.setProperty('display', 'block', 'important');
+        var t = window.getComputedStyle(sidebar).transform;
+        // Only fix if transform is not 'none' (meaning it got collapsed)
+        if (t && t !== 'none' && t !== 'matrix(1, 0, 0, 1, 0, 0)') {
+            sidebar.style.setProperty('transform', 'none', 'important');
+            sidebar.style.setProperty('transition', 'none', 'important');
+            sidebar.style.setProperty('width', '260px', 'important');
+            sidebar.style.setProperty('min-width', '260px', 'important');
+            sidebar.style.setProperty('visibility', 'visible', 'important');
+            sidebar.style.setProperty('opacity', '1', 'important');
+            sidebar.style.setProperty('display', 'block', 'important');
+        }
     }
-}, 300);
+}, 200);
 </script>
 """
 
@@ -218,32 +225,52 @@ footer a { display: none !important; }
 [data-testid="stDecoration"] { display: none !important; }
 .st-emotion-cache-uf99v8 { display: none !important; }
 
-/* ── Sidebar: force it to always be visible and in correct position ── */
-[data-testid="stSidebar"] {
-    display: block !important;
+/* ═══════════════════════════════════════════════════
+   SIDEBAR: Always visible, never collapses
+   ═══════════════════════════════════════════════════ */
+
+/* 1. Hide the collapse toggle button completely */
+[data-testid="collapsedControl"] { display: none !important; }
+
+/* 2. Force sidebar to stay expanded with no slide animation */
+section[data-testid="stSidebar"] {
+    width: 260px !important;
+    min-width: 260px !important;
+    max-width: 260px !important;
+    transform: none !important;
+    transition: none !important;
     visibility: visible !important;
     opacity: 1 !important;
-    pointer-events: auto !important;
-    transform: none !important;
-    min-width: 240px !important;
-    max-width: 280px !important;
-    width: 260px !important;
-    position: relative !important;
-    left: 0 !important;
+    display: block !important;
 }
-[data-testid="stSidebar"] * {
+
+/* 3. The inner div must also be full width */
+section[data-testid="stSidebar"] > div {
+    width: 260px !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* 4. Main content must account for fixed sidebar width */
+.stAppViewContainer > section:last-child {
+    margin-left: 260px !important;
+}
+
+/* 5. All sidebar elements must be interactive */
+section[data-testid="stSidebar"] * {
     pointer-events: auto !important;
     visibility: visible !important;
 }
-/* Ensure the sidebar section is never pushed off screen */
-section[data-testid="stSidebar"] {
-    transform: translateX(0px) !important;
-    min-width: 240px !important;
-    max-width: 280px !important;
-}
 
-/* Sidebar toggle buttons: leave ALL buttons visible so sidebar can always be opened/closed */
-/* Do NOT hide any buttons inside stSidebarContent - it breaks the toggle */
+/* 6. Glassmorphism sidebar */
+section[data-testid="stSidebar"] > div {
+    background: linear-gradient(180deg,
+        rgba(255,255,255,0.25) 0%,
+        rgba(255,255,255,0.10) 100%) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-right: 1px solid rgba(255,255,255,0.2) !important;
+}
 </style>
 """
 st.markdown(HIDE_CHROME, unsafe_allow_html=True)
@@ -275,12 +302,6 @@ st.markdown(f"""
 
 /* ── Sidebar ── */
 [data-testid="stSidebar"] {{
-    background: rgba(255,255,255,0.15) !important;
-    backdrop-filter: blur(20px) !important;
-    -webkit-backdrop-filter: blur(20px) !important;
-    border-right: 1px solid {BORDER} !important;
-    min-width: 240px !important;
-    max-width: 260px !important;
     box-shadow: 4px 0 24px rgba(0,0,0,0.06) !important;
 }}
 [data-testid="stSidebar"] > div:first-child {{
@@ -1240,7 +1261,7 @@ else:
                 mode="lines+markers",
                 line=dict(color=ACCENT, width=2.5, shape="spline", smoothing=0.8),
                 marker=dict(size=7, color=ACCENT,
-                            line=dict(width=2, color=ROOT_BG)),
+                            line=dict(width=2, color=PAGE_COLOR)),
                 fill="tozeroy",
                 fillcolor=ACCENT_GLOW,
                 hovertemplate="<b>%{x}</b><br>%{y} min<extra></extra>"
