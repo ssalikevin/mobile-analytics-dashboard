@@ -42,88 +42,99 @@ D = st.session_state.dark_mode
 # Nothing is hardcoded inside components.
 
 if D:
-    # ── DARK PALETTE ──
-    ROOT_BG          = "linear-gradient(135deg, #0d1117 0%, #0d1f2d 50%, #0d1117 100%)"
-    SURFACE          = "#161B22"
-    SURFACE2         = "#1C2128"
-    BORDER           = "#30363D"
-    BORDER_SOFT      = "#21262D"
+    # ── DARK PALETTE — Gradient UI Kit (Navy/Indigo + Cyan-Blue gradient) ──
+    ROOT_BG          = "linear-gradient(145deg, #1a1740 0%, #1e1b3a 40%, #1a1d3e 100%)"
+    SURFACE          = "#252245"
+    SURFACE2         = "#1e1b3a"
+    BORDER           = "rgba(255,255,255,0.08)"
+    BORDER_SOFT      = "rgba(255,255,255,0.04)"
 
-    TXT_HEAD         = "#E6EDF3"
-    TXT_BODY         = "#C9D1D9"
-    TXT_MUTED        = "#8B949E"
-    TXT_FAINT        = "#484F58"
+    TXT_HEAD         = "#FFFFFF"
+    TXT_BODY         = "#C8C6E8"
+    TXT_MUTED        = "#8B88B8"
+    TXT_FAINT        = "#4A4870"
 
-    ACCENT           = "#58A6FF"
-    ACCENT_DIM       = "#1F6FEB"
-    ACCENT_GLOW      = "rgba(88,166,255,0.15)"
+    ACCENT           = "#00E5CC"
+    ACCENT_DIM       = "#4A9EFF"
+    ACCENT_GLOW      = "rgba(0,229,204,0.15)"
 
-    OK               = "#3FB950"
-    OK_BG            = "rgba(63,185,80,0.12)"
-    OK_BORDER        = "rgba(63,185,80,0.35)"
+    # Signature gradient: cyan → blue → purple
+    GRAD_START       = "#00E5CC"
+    GRAD_MID         = "#4A9EFF"
+    GRAD_END         = "#7B5EA7"
+    GRADIENT         = "linear-gradient(135deg, #00E5CC 0%, #4A9EFF 50%, #7B5EA7 100%)"
 
-    WARN             = "#D29922"
-    WARN_BG          = "rgba(210,153,34,0.12)"
-    WARN_BORDER      = "rgba(210,153,34,0.35)"
+    OK               = "#00E5CC"
+    OK_BG            = "rgba(0,229,204,0.12)"
+    OK_BORDER        = "rgba(0,229,204,0.35)"
 
-    PILL_OPEN_BG     = "rgba(63,185,80,0.15)"
-    PILL_OPEN_TXT    = "#3FB950"
-    PILL_CLOSE_BG   = "rgba(210,153,34,0.15)"
-    PILL_CLOSE_TXT  = "#D29922"
+    WARN             = "#FFB347"
+    WARN_BG          = "rgba(255,179,71,0.12)"
+    WARN_BORDER      = "rgba(255,179,71,0.35)"
 
-    METRIC_BG        = "#161B22"
-    METRIC_BORDER    = "#30363D"
+    PILL_OPEN_BG     = "rgba(0,229,204,0.15)"
+    PILL_OPEN_TXT    = "#00E5CC"
+    PILL_CLOSE_BG    = "rgba(255,179,71,0.15)"
+    PILL_CLOSE_TXT   = "#FFB347"
+
+    METRIC_BG        = "#252245"
+    METRIC_BORDER    = "rgba(255,255,255,0.08)"
     CHART_BG         = "rgba(0,0,0,0)"
-    GRID             = "#21262D"
+    GRID             = "rgba(255,255,255,0.06)"
     PLOTLY_T         = "plotly_dark"
 
-    BTN_BG           = "#FFD700"
-    BTN_FG           = "#0D1117"
+    BTN_BG           = "linear-gradient(135deg, #00E5CC, #4A9EFF)"
+    BTN_FG           = "#1e1b3a"
     BTN_ICON         = "☀️"
     BTN_LABEL        = "Light Mode"
-    PAGE_COLOR       = "#0d1117"   # Plain hex for Plotly (not gradient)
+    PAGE_COLOR       = "#1e1b3a"
 
 else:
-    # ── LIGHT PALETTE ──
-    ROOT_BG          = "linear-gradient(135deg, #e8ecf1 0%, #dce3ed 50%, #e4e8f0 100%)"
+    # ── LIGHT PALETTE — Soft version of the UI kit ──
+    ROOT_BG          = "linear-gradient(145deg, #f0effe 0%, #e8e6fa 40%, #ede9ff 100%)"
     SURFACE          = "#FFFFFF"
-    SURFACE2         = "#F6F8FA"
-    BORDER           = "#D0D7DE"
-    BORDER_SOFT      = "#EAEEF2"
+    SURFACE2         = "#F4F2FF"
+    BORDER           = "rgba(74,62,168,0.12)"
+    BORDER_SOFT      = "rgba(74,62,168,0.06)"
 
-    TXT_HEAD         = "#1F2328"
-    TXT_BODY         = "#36393D"
-    TXT_MUTED        = "#57606A"
-    TXT_FAINT        = "#B0B7BF"
+    TXT_HEAD         = "#1A1740"
+    TXT_BODY         = "#2E2A5E"
+    TXT_MUTED        = "#6B6899"
+    TXT_FAINT        = "#B0AECF"
 
-    ACCENT           = "#0969DA"
-    ACCENT_DIM       = "#0550AE"
-    ACCENT_GLOW      = "rgba(9,105,218,0.08)"
+    ACCENT           = "#4A9EFF"
+    ACCENT_DIM       = "#7B5EA7"
+    ACCENT_GLOW      = "rgba(74,158,255,0.12)"
 
-    OK               = "#1A7F37"
-    OK_BG            = "rgba(26,127,55,0.08)"
-    OK_BORDER        = "rgba(26,127,55,0.25)"
+    GRAD_START       = "#00E5CC"
+    GRAD_MID         = "#4A9EFF"
+    GRAD_END         = "#7B5EA7"
+    GRADIENT         = "linear-gradient(135deg, #00E5CC 0%, #4A9EFF 50%, #7B5EA7 100%)"
 
-    WARN             = "#9A6700"
-    WARN_BG          = "rgba(154,103,0,0.08)"
-    WARN_BORDER      = "rgba(154,103,0,0.25)"
+    OK               = "#00B894"
+    OK_BG            = "rgba(0,184,148,0.10)"
+    OK_BORDER        = "rgba(0,184,148,0.30)"
 
-    PILL_OPEN_BG     = "rgba(26,127,55,0.1)"
-    PILL_OPEN_TXT    = "#1A7F37"
-    PILL_CLOSE_BG   = "rgba(154,103,0,0.1)"
-    PILL_CLOSE_TXT  = "#9A6700"
+    WARN             = "#E17055"
+    WARN_BG          = "rgba(225,112,85,0.10)"
+    WARN_BORDER      = "rgba(225,112,85,0.30)"
+
+    PILL_OPEN_BG     = "rgba(0,184,148,0.12)"
+    PILL_OPEN_TXT    = "#00B894"
+    PILL_CLOSE_BG    = "rgba(225,112,85,0.12)"
+    PILL_CLOSE_TXT   = "#E17055"
 
     METRIC_BG        = "#FFFFFF"
-    METRIC_BORDER    = "#D0D7DE"
+    METRIC_BORDER    = "rgba(74,62,168,0.12)"
     CHART_BG         = "rgba(0,0,0,0)"
-    GRID             = "#EAEEF2"
+    GRID             = "rgba(74,62,168,0.08)"
     PLOTLY_T         = "plotly_white"
 
-    BTN_BG           = "#1F2328"
-    BTN_FG           = "#FFFFFF"
+    BTN_BG           = "linear-gradient(135deg, #00E5CC, #4A9EFF)"
+    BTN_FG           = "#1A1740"
     BTN_ICON         = "🌙"
     BTN_LABEL        = "Dark Mode"
-    PAGE_COLOR       = "#e8ecf1"   # Plain hex for Plotly (not gradient)
+    PAGE_COLOR       = "#f0effe"
 
 # ── HIDE STREAMLIT CHROME ──────────────────────────────────────────────────────
 # Hides: running man, stop button, deploy button,
@@ -280,7 +291,7 @@ st.markdown(HIDE_CHROME2, unsafe_allow_html=True)
 
 st.markdown(f"""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 /* ── Root ── */
@@ -288,7 +299,7 @@ st.markdown(f"""
     background: {ROOT_BG} !important;
     background-size: cover !important;
     background-attachment: fixed !important;
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'Montserrat', sans-serif !important;
     color: {TXT_BODY} !important;
     min-height: 100vh !important;
 }}
@@ -332,7 +343,7 @@ st.markdown(f"""
 }}
 [data-testid="stSidebar"] * {{
     color: {TXT_BODY} !important;
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'Montserrat', sans-serif !important;
 }}
 
 /* ── Selectbox ── */
@@ -346,36 +357,47 @@ st.markdown(f"""
     fill: {TXT_MUTED} !important;
 }}
 
-/* ── Metrics ── */
+/* ── Metrics — UI Kit style with gradient accent bar ── */
 [data-testid="stMetric"] {{
-    background: {"rgba(255,255,255,0.08)" if D else "rgba(255,255,255,0.55)"} !important;
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
+    background: {METRIC_BG} !important;
     border: 1px solid {METRIC_BORDER} !important;
     border-radius: 16px !important;
-    padding: 1rem 1.25rem !important;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04) !important;
-    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s !important;
+    padding: 1rem 1.25rem 1rem 1.5rem !important;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.14), 0 1px 4px rgba(0,0,0,0.08) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}}
+[data-testid="stMetric"]::before {{
+    content: '' !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 4px !important;
+    background: linear-gradient(180deg, #00E5CC 0%, #4A9EFF 50%, #7B5EA7 100%) !important;
+    border-radius: 16px 0 0 16px !important;
 }}
 [data-testid="stMetric"]:hover {{
-    border-color: {ACCENT} !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.20), 0 4px 12px rgba(0,0,0,0.10) !important;
 }}
 [data-testid="stMetricLabel"] p,
 [data-testid="stMetricLabel"] div {{
     color: {TXT_MUTED} !important;
-    font-size: 0.72rem !important;
+    font-size: 0.68rem !important;
     font-weight: 600 !important;
     text-transform: uppercase !important;
-    letter-spacing: 0.07em !important;
+    letter-spacing: 0.1em !important;
+    font-family: 'Montserrat', sans-serif !important;
 }}
 [data-testid="stMetricValue"] div {{
     color: {TXT_HEAD} !important;
-    font-size: 1.35rem !important;
-    font-weight: 700 !important;
-    font-family: 'JetBrains Mono', monospace !important;
-    line-height: 1.15 !important;
+    font-size: 1.6rem !important;
+    font-weight: 800 !important;
+    font-family: 'Montserrat', sans-serif !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.02em !important;
 }}
 
 /* ── Toggle ── */
@@ -425,7 +447,7 @@ hr {{
     color: {BTN_FG} !important;
     border: none !important;
     border-radius: 8px !important;
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'Montserrat', sans-serif !important;
     font-weight: 600 !important;
     font-size: 0.82rem !important;
     padding: 0.45rem 1rem !important;
@@ -439,10 +461,10 @@ hr {{
 /* ── Headings ── */
 h1, h2, h3, h4, h5 {{
     color: {TXT_HEAD} !important;
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'Montserrat', sans-serif !important;
 }}
 p, span, label, div {{
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'Montserrat', sans-serif !important;
 }}
 
 /* ── CUSTOM COMPONENTS ── */
@@ -455,10 +477,14 @@ p, span, label, div {{
 }}
 .ph-title {{
     font-size: 1.65rem;
-    font-weight: 800;
-    color: {TXT_HEAD};
+    font-weight: 900;
+    background: {GRADIENT};
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     letter-spacing: -0.03em;
     line-height: 1.2;
+    font-family: 'Montserrat', sans-serif;
 }}
 .ph-sub {{
     font-size: 0.82rem;
@@ -488,12 +514,16 @@ p, span, label, div {{
     margin: 1.5rem 0 0.9rem 0;
 }}
 .slabel-text {{
-    font-size: 0.7rem;
-    font-weight: 700;
+    font-size: 0.68rem;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: {TXT_MUTED};
+    letter-spacing: 0.12em;
+    background: {GRADIENT};
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     white-space: nowrap;
+    font-family: 'Montserrat', sans-serif;
 }}
 .slabel-line {{
     flex: 1;
@@ -533,8 +563,16 @@ p, span, label, div {{
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }}
 .ucard.active {{
-    background: {OK_BG};
-    border: 1px solid {OK_BORDER};
+    background: {GRADIENT} !important;
+    border: 1px solid transparent !important;
+    box-shadow: 0 4px 20px rgba(0,229,204,0.25) !important;
+}}
+.ucard.active .uname {{
+    color: #ffffff !important;
+}}
+.ucard.active .utime,
+.ucard.active .ubadge {{
+    color: rgba(255,255,255,0.8) !important;
 }}
 .ucard.idle {{
     background: {SURFACE2};
@@ -656,7 +694,7 @@ p, span, label, div {{
     width: 27px;
     height: 27px;
     border-radius: 50%;
-    background: linear-gradient(135deg, {ACCENT_DIM}, {ACCENT});
+    background: {GRADIENT};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -903,7 +941,7 @@ with st.sidebar:
     st.markdown(f"""
     <div style="text-align:center; margin-top:-8px; margin-bottom:0.8rem;">
         <div style="font-size:0.72rem; font-weight:700;
-                    color:{ACCENT}; letter-spacing:0.08em;
+                    background:linear-gradient(135deg,#00E5CC,#4A9EFF); -webkit-background-clip:text; -webkit-text-fill-color:transparent; letter-spacing:0.08em;
                     font-family:'JetBrains Mono',monospace;
                     text-transform:uppercase;">
             Light Your Candle
@@ -1214,7 +1252,7 @@ else:
         template=PLOTLY_T, height=270,
         margin=dict(t=15, b=35, l=10, r=10),
         paper_bgcolor=CHART_BG, plot_bgcolor=CHART_BG,
-        font=dict(family="Inter", size=11, color=TXT_MUTED),
+        font=dict(family="Montserrat", size=11, color=TXT_MUTED),
         showlegend=False,
     )
 
@@ -1245,7 +1283,7 @@ else:
                 template=PLOTLY_T, height=270,
                 margin=dict(t=15, b=35, l=10, r=10),
                 paper_bgcolor=CHART_BG, plot_bgcolor=CHART_BG,
-                font=dict(family="Inter", size=11, color=TXT_MUTED),
+                font=dict(family="Montserrat", size=11, color=TXT_MUTED),
                 showlegend=False,
                 xaxis=dict(showgrid=False, color=TXT_MUTED,
                            tickfont=dict(size=10, color=TXT_MUTED)),
@@ -1280,7 +1318,7 @@ else:
                 template=PLOTLY_T, height=270,
                 margin=dict(t=15, b=35, l=10, r=10),
                 paper_bgcolor=CHART_BG, plot_bgcolor=CHART_BG,
-                font=dict(family="Inter", size=11, color=TXT_MUTED),
+                font=dict(family="Montserrat", size=11, color=TXT_MUTED),
                 showlegend=False,
                 xaxis=dict(showgrid=True, gridcolor=GRID, color=TXT_MUTED,
                            title=dict(text="seconds", font=dict(size=10))),
@@ -1317,7 +1355,7 @@ else:
                 template=PLOTLY_T, height=270,
                 margin=dict(t=15, b=35, l=10, r=10),
                 paper_bgcolor=CHART_BG, plot_bgcolor=CHART_BG,
-                font=dict(family="Inter", size=11, color=TXT_MUTED),
+                font=dict(family="Montserrat", size=11, color=TXT_MUTED),
                 showlegend=False,
                 xaxis=dict(showgrid=False, color=TXT_MUTED,
                            tickfont=dict(size=9, color=TXT_MUTED), tickangle=-35),
