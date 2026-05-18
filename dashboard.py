@@ -304,6 +304,29 @@ st.markdown(f"""
 [data-testid="stSidebar"] {{
     box-shadow: 4px 0 24px rgba(0,0,0,0.06) !important;
 }}
+
+/* ── Sidebar Logo ── */
+[data-testid="stSidebar"] img {{
+    border-radius: 12px !important;
+    margin-bottom: 0.5rem !important;
+    filter: drop-shadow(0px 4px 12px rgba(0,0,0,0.25)) !important;
+    transition: filter 0.2s ease !important;
+}}
+[data-testid="stSidebar"] img:hover {{
+    filter: drop-shadow(0px 6px 18px rgba(0,0,0,0.4)) brightness(1.05) !important;
+}}
+
+/* Sidebar top padding */
+[data-testid="stSidebar"] [data-testid="stVerticalBlock"] {{
+    padding-top: 0.5rem !important;
+}}
+
+/* Remove white background box from image container */
+[data-testid="stSidebar"] [data-testid="stImage"] {{
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}}
 [data-testid="stSidebar"] > div:first-child {{
     padding: 1.4rem 1.2rem !important;
 }}
@@ -856,17 +879,27 @@ def load_summary():
 
 with st.sidebar:
 
-    # Branding
+    # ── University Logo ──
+    st.image(
+        "https://slau.ac.ug/wp-content/uploads/2021/07/SLAU-Logo-1.png",
+        use_container_width=True
+    )
+
+    # ── University tagline + divider ──
     st.markdown(f"""
-    <div style="padding-bottom:1rem; border-bottom:1px solid {BORDER}; margin-bottom:0.5rem">
-        <div style="font-size:1.05rem;font-weight:800;color:{TXT_HEAD};
-                    letter-spacing:-0.02em;line-height:1.2">
-            📱 Mobile Analytics
+    <div style="text-align:center; margin-top:-8px; margin-bottom:0.8rem;">
+        <div style="font-size:0.72rem; font-weight:700;
+                    color:{ACCENT}; letter-spacing:0.08em;
+                    font-family:'JetBrains Mono',monospace;
+                    text-transform:uppercase;">
+            Light Your Candle
         </div>
-        <div style="font-size:0.74rem;color:{TXT_MUTED};margin-top:0.2rem">
+        <div style="font-size:0.68rem; color:{TXT_MUTED}; margin-top:0.15rem;">
             Big Data Analysis Project
         </div>
     </div>
+    <hr style="margin:0 0 0.8rem 0; border:none;
+               border-top:1px solid {BORDER};"/>
     """, unsafe_allow_html=True)
 
     # Theme toggle
