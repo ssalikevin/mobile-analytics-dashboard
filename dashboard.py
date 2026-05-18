@@ -880,10 +880,24 @@ def load_summary():
 with st.sidebar:
 
     # ── University Logo ──
-    st.image(
-        "https://slau.ac.ug/wp-content/uploads/2021/07/SLAU-Logo-1.png",
-        use_container_width=True
-    )
+    # Tries local file first, falls back to URL if not found
+    _logo_local = os.path.join(os.path.dirname(os.path.abspath(__file__)), "slau_logo.png")
+    _logo_url   = "https://slau.ac.ug/wp-content/uploads/2021/07/SLAU-Logo-1.png"
+    try:
+        if os.path.exists(_logo_local):
+            st.image(_logo_local, use_container_width=True)
+        else:
+            st.image(_logo_url, use_container_width=True)
+    except Exception:
+        # If both fail, show text fallback
+        st.markdown(f"""
+        <div style="text-align:center;padding:0.8rem 0 0.3rem 0;">
+            <div style="font-size:1rem;font-weight:800;color:{ACCENT};
+                        letter-spacing:-0.02em;">SLAU</div>
+            <div style="font-size:0.65rem;color:{TXT_MUTED};">
+                St. Lawrence University</div>
+        </div>
+        """, unsafe_allow_html=True)
 
     # ── University tagline + divider ──
     st.markdown(f"""
