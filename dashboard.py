@@ -259,6 +259,7 @@ st.markdown(f"""
 /* ── Root ── */
 .stApp {{
     background: {ROOT_BG} !important;
+    background-size: cover !important;
     background-attachment: fixed !important;
     font-family: 'Inter', sans-serif !important;
     color: {TXT_BODY} !important;
@@ -303,7 +304,7 @@ st.markdown(f"""
 
 /* ── Metrics ── */
 [data-testid="stMetric"] {{
-    background: {GLASS_BG} !important;
+    background: {"rgba(255,255,255,0.08)" if D else "rgba(255,255,255,0.55)"} !important;
     backdrop-filter: blur(16px) !important;
     -webkit-backdrop-filter: blur(16px) !important;
     border: 1px solid {METRIC_BORDER} !important;
