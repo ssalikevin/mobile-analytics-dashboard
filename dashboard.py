@@ -43,7 +43,7 @@ D = st.session_state.dark_mode
 
 if D:
     # ── DARK PALETTE ──
-    ROOT_BG          = "#0D1117"
+    ROOT_BG          = "linear-gradient(135deg, #0d1117 0%, #0d1f2d 50%, #0d1117 100%)"
     SURFACE          = "#161B22"
     SURFACE2         = "#1C2128"
     BORDER           = "#30363D"
@@ -84,7 +84,7 @@ if D:
 
 else:
     # ── LIGHT PALETTE ──
-    ROOT_BG          = "#F6F8FA"
+    ROOT_BG          = "linear-gradient(135deg, #e8ecf1 0%, #dce3ed 50%, #e4e8f0 100%)"
     SURFACE          = "#FFFFFF"
     SURFACE2         = "#F6F8FA"
     BORDER           = "#D0D7DE"
@@ -258,12 +258,14 @@ st.markdown(f"""
 
 /* ── Root ── */
 .stApp {{
-    background-color: {ROOT_BG} !important;
+    background: {ROOT_BG} !important;
+    background-attachment: fixed !important;
     font-family: 'Inter', sans-serif !important;
     color: {TXT_BODY} !important;
+    min-height: 100vh !important;
 }}
 .main .block-container {{
-    background: {ROOT_BG} !important;
+    background: transparent !important;
     max-width: 1380px !important;
     padding-left: 2rem !important;
     padding-right: 2rem !important;
@@ -272,10 +274,13 @@ st.markdown(f"""
 
 /* ── Sidebar ── */
 [data-testid="stSidebar"] {{
-    background: {SURFACE} !important;
+    background: rgba(255,255,255,0.15) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
     border-right: 1px solid {BORDER} !important;
     min-width: 240px !important;
     max-width: 260px !important;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.06) !important;
 }}
 [data-testid="stSidebar"] > div:first-child {{
     padding: 1.4rem 1.2rem !important;
@@ -298,14 +303,19 @@ st.markdown(f"""
 
 /* ── Metrics ── */
 [data-testid="stMetric"] {{
-    background: {METRIC_BG} !important;
+    background: {GLASS_BG} !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
     border: 1px solid {METRIC_BORDER} !important;
-    border-radius: 12px !important;
+    border-radius: 16px !important;
     padding: 1rem 1.25rem !important;
-    transition: border-color 0.2s;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04) !important;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s !important;
 }}
 [data-testid="stMetric"]:hover {{
     border-color: {ACCENT} !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06) !important;
 }}
 [data-testid="stMetricLabel"] p,
 [data-testid="stMetricLabel"] div {{
@@ -464,11 +474,18 @@ p, span, label, div {{
     align-items: center;
     gap: 0.7rem;
     padding: 0.65rem 0.85rem;
-    border-radius: 10px;
+    border-radius: 12px;
     margin-bottom: 0.45rem;
     border: 1px solid {BORDER};
-    background: {SURFACE};
-    transition: border-color 0.2s, background 0.2s;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    transition: border-color 0.2s, background 0.2s, transform 0.2s, box-shadow 0.2s;
+}}
+.ucard:hover {{
+    transform: translateX(4px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }}
 .ucard.active {{
     background: {OK_BG};
@@ -529,10 +546,13 @@ p, span, label, div {{
 
 /* Event feed container */
 .feed-wrap {{
-    background: {SURFACE};
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid {BORDER};
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.07);
 }}
 .feed-head {{
     display: flex;
@@ -634,11 +654,19 @@ p, span, label, div {{
 
 /* Chart card */
 .ccrd {{
-    background: {SURFACE};
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid {BORDER};
-    border-radius: 12px;
+    border-radius: 20px;
     padding: 1rem 1.1rem 0.4rem 1.1rem;
     height: 100%;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.07);
+    transition: transform 0.2s, box-shadow 0.2s;
+}}
+.ccrd:hover {{
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.10);
 }}
 .ccrd-title {{
     font-size: 0.7rem;
