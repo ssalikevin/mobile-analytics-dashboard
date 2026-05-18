@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-05-18 12:30:16",
+  "generated_at": "2026-05-18 13:30:12",
   "date": "2026-05-18",
   "screen_time": [
     {
       "user_id": "U001",
-      "total_seconds": 7018,
-      "total_minutes": 116.97
+      "total_seconds": 7059,
+      "total_minutes": 117.65
     },
     {
       "user_id": "U006",
@@ -22,8 +22,8 @@
     },
     {
       "app_name": "Upgrade",
-      "total_seconds": 1562,
-      "total_minutes": 26.03,
+      "total_seconds": 1567,
+      "total_minutes": 26.12,
       "rank": 2
     },
     {
@@ -69,46 +69,52 @@
       "rank": 9
     },
     {
+      "app_name": "Audioplayer",
+      "total_seconds": 36,
+      "total_minutes": 0.6,
+      "rank": 10
+    },
+    {
       "app_name": "Package installer",
       "total_seconds": 29,
       "total_minutes": 0.48,
-      "rank": 10
+      "rank": 11
     },
     {
       "app_name": "Youtube",
       "total_seconds": 28,
       "total_minutes": 0.47,
-      "rank": 11
+      "rank": 12
     },
     {
       "app_name": "Google play store",
       "total_seconds": 19,
       "total_minutes": 0.32,
-      "rank": 12
+      "rank": 13
     },
     {
       "app_name": "Go",
       "total_seconds": 11,
       "total_minutes": 0.18,
-      "rank": 13
+      "rank": 14
     },
     {
       "app_name": "Media storage",
       "total_seconds": 3,
       "total_minutes": 0.05,
-      "rank": 14
+      "rank": 15
     },
     {
       "app_name": "Whatsapp",
       "total_seconds": 3,
       "total_minutes": 0.05,
-      "rank": 15
+      "rank": 16
     },
     {
       "app_name": "Permission controller",
       "total_seconds": 2,
       "total_minutes": 0.03,
-      "rank": 16
+      "rank": 17
     }
   ],
   "hourly_patterns": [
@@ -139,8 +145,14 @@
     {
       "hour": "17",
       "label": "17:00-18:00",
-      "total_seconds": 625,
-      "total_minutes": 10.42
+      "total_seconds": 665,
+      "total_minutes": 11.08
+    },
+    {
+      "hour": "18",
+      "label": "18:00-19:00",
+      "total_seconds": 1,
+      "total_minutes": 0.02
     },
     {
       "hour": "19",
