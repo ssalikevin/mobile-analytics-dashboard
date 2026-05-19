@@ -8,7 +8,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import json
 import os
 import time
@@ -174,23 +174,56 @@ document.addEventListener('keydown', function(e) {
     }
 }, true);
 
-// Force sidebar to always stay expanded
-setInterval(function() {
-    var sidebar = document.querySelector('section[data-testid="stSidebar"]');
-    if (sidebar) {
-        var t = window.getComputedStyle(sidebar).transform;
-        // Only fix if transform is not 'none' (meaning it got collapsed)
-        if (t && t !== 'none' && t !== 'matrix(1, 0, 0, 1, 0, 0)') {
-            sidebar.style.setProperty('transform', 'none', 'important');
-            sidebar.style.setProperty('transition', 'none', 'important');
-            sidebar.style.setProperty('width', '260px', 'important');
-            sidebar.style.setProperty('min-width', '260px', 'important');
-            sidebar.style.setProperty('visibility', 'visible', 'important');
-            sidebar.style.setProperty('opacity', '1', 'important');
-            sidebar.style.setProperty('display', 'block', 'important');
+// ── Live clock: updates every second without page reload ──
+function updateClock() {
+    // EAT = UTC+3
+    var now = new Date();
+    var eat = new Date(now.getTime() + (3 * 60 * 60 * 1000));
+    var h = eat.getUTCHours();
+    var m = eat.getUTCMinutes();
+    var s = eat.getUTCSeconds();
+    var ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    var timeStr = (h < 10 ? '0'+h : h) + ':' +
+                  (m < 10 ? '0'+m : m) + ':' +
+                  (s < 10 ? '0'+s : s) + ' ' + ampm;
+
+    // Find the Updated (EAT) metric and update its value
+    var metrics = document.querySelectorAll('[data-testid="stMetricValue"]');
+    metrics.forEach(function(el) {
+        var label = el.closest('[data-testid="stMetric"]');
+        if (label) {
+            var lbl = label.querySelector('[data-testid="stMetricLabel"]');
+            if (lbl && lbl.textContent.toUpperCase().includes('UPDATED')) {
+                el.querySelector('div').textContent = timeStr;
+            }
         }
+    });
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// Responsive sidebar: force open on desktop, allow collapse on mobile
+function fixSidebar() {
+    var sidebar = document.querySelector('section[data-testid="stSidebar"]');
+    if (!sidebar) return;
+    var isMobile = window.innerWidth < 769;
+    if (!isMobile) {
+        // Desktop: always keep open
+        sidebar.style.setProperty('transform', 'none', 'important');
+        sidebar.style.setProperty('transition', 'none', 'important');
+        sidebar.style.setProperty('width', '260px', 'important');
+        sidebar.style.setProperty('min-width', '260px', 'important');
+        sidebar.style.setProperty('visibility', 'visible', 'important');
+        sidebar.style.setProperty('opacity', '1', 'important');
+        sidebar.style.setProperty('display', 'block', 'important');
+        sidebar.style.setProperty('overflow', 'visible', 'important');
     }
-}, 200);
+    // Mobile: let Streamlit manage it naturally
+}
+setInterval(fixSidebar, 300);
+fixSidebar();
+window.addEventListener('resize', fixSidebar);
 </script>
 """
 
@@ -263,9 +296,7 @@ section[data-testid="stSidebar"] > div {
 }
 
 /* 4. Main content must account for fixed sidebar width */
-.stAppViewContainer > section:last-child {
-    margin-left: 260px !important;
-}
+/* margin-left handled by @media queries below */
 
 /* 5. All sidebar elements must be interactive */
 section[data-testid="stSidebar"] * {
@@ -273,14 +304,78 @@ section[data-testid="stSidebar"] * {
     visibility: visible !important;
 }
 
-/* 6. Glassmorphism sidebar */
+/* 6. Glassmorphism sidebar — adapts to dark/light */
 section[data-testid="stSidebar"] > div {
     background: linear-gradient(180deg,
-        rgba(255,255,255,0.25) 0%,
-        rgba(255,255,255,0.10) 100%) !important;
+        rgba(255,255,255,0.20) 0%,
+        rgba(255,255,255,0.08) 100%) !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
-    border-right: 1px solid rgba(255,255,255,0.2) !important;
+    border-right: 1px solid rgba(255,255,255,0.15) !important;
+}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE — sidebar auto-hides on small screens
+   ═══════════════════════════════════════════════════ */
+
+/* Tablets and below (< 768px): hide sidebar, show hamburger */
+@media (max-width: 768px) {
+    section[data-testid="stSidebar"] {
+        width: 0px !important;
+        min-width: 0px !important;
+        max-width: 0px !important;
+        transform: translateX(-260px) !important;
+        position: fixed !important;
+        z-index: 999 !important;
+        height: 100vh !important;
+        overflow: hidden !important;
+    }
+    section[data-testid="stSidebar"].sidebar-open {
+        width: 260px !important;
+        min-width: 260px !important;
+        max-width: 260px !important;
+        transform: translateX(0px) !important;
+    }
+    .stAppViewContainer > section:last-child {
+        margin-left: 0px !important;
+        width: 100% !important;
+    }
+    .main .block-container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+}
+
+/* Desktop (>= 768px): sidebar always visible */
+@media (min-width: 769px) {
+    section[data-testid="stSidebar"] {
+        width: 260px !important;
+        min-width: 260px !important;
+        max-width: 260px !important;
+        transform: none !important;
+        transition: none !important;
+        position: relative !important;
+    }
+    .stAppViewContainer > section:last-child {
+        margin-left: 260px !important;
+    }
+}
+
+/* Mobile phones (< 480px): full width content */
+@media (max-width: 480px) {
+    [data-testid="stMetric"] {
+        padding: 0.7rem 0.8rem 0.7rem 1.1rem !important;
+    }
+    [data-testid="stMetricValue"] div {
+        font-size: 1.1rem !important;
+    }
+    .main .block-container {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+    .ph-title {
+        font-size: 1.2rem !important;
+    }
 }
 </style>
 """
@@ -313,7 +408,14 @@ st.markdown(f"""
 
 /* ── Sidebar ── */
 [data-testid="stSidebar"] {{
-    box-shadow: 4px 0 24px rgba(0,0,0,0.06) !important;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.10) !important;
+}}
+section[data-testid="stSidebar"] > div {{
+    background: {"linear-gradient(180deg,rgba(30,27,58,0.95) 0%,rgba(26,23,64,0.98) 100%)" if D else "linear-gradient(180deg,rgba(255,255,255,0.92) 0%,rgba(240,239,254,0.95) 100%)"} !important;
+    border-right: 1px solid {BORDER} !important;
+}}
+[data-testid="stSidebar"] * {{
+    color: {TXT_BODY} !important;
 }}
 
 /* ── Sidebar Logo ── */
@@ -868,12 +970,15 @@ def fetch_events(db, minutes=60):
         raw = fdb.reference("events").get()
         if not raw:
             return []
-        cutoff = datetime.now() - timedelta(minutes=minutes)
-        events = []
+        # EAT = UTC+3. Firebase stores timestamps in EAT.
+        # We compare in EAT by using now() + 3 hours offset on server
+        EAT_OFFSET = timedelta(hours=3)
+        now_eat    = datetime.utcnow() + EAT_OFFSET
+        cutoff     = now_eat - timedelta(minutes=minutes)
+        events     = []
         for k, ev in raw.items():
             try:
                 ts = datetime.strptime(ev.get("timestamp", ""), "%Y-%m-%d %H:%M:%S")
-                # Include event if within time window OR if All time (minutes >= 9999)
                 if ts >= cutoff or minutes >= 9999:
                     ev["_dt"] = ts
                     events.append(ev)
@@ -886,7 +991,8 @@ def fetch_events(db, minutes=60):
 
 
 def user_status(events, idle_min=30):
-    now, seen = datetime.now(), {}
+    now = datetime.utcnow() + timedelta(hours=3)  # EAT
+    seen = {}
     for ev in events:
         u = ev.get("user_name", "?").lower()
         t = ev.get("_dt", now)
@@ -977,7 +1083,7 @@ with st.sidebar:
     # Refresh
     st.markdown(f'<div class="sb-label">Auto Refresh</div>', unsafe_allow_html=True)
     auto_refresh = st.toggle("Enabled", value=True)
-    refresh_sec  = st.slider("Interval (s)", 5, 60, 10)
+    refresh_sec  = st.slider("Interval (s)", 1, 30, 3)
 
     # Cluster status
     st.markdown(f'<div class="sb-label">Cluster</div>', unsafe_allow_html=True)
@@ -993,7 +1099,7 @@ with st.sidebar:
     st.markdown(f"""
     <div style="margin-top:1rem;font-size:0.7rem;
                 font-family:'JetBrains Mono',monospace;color:{TXT_FAINT}">
-        {datetime.now().strftime('%Y-%m-%d %I:%M:%S %p')} EAT
+        {(datetime.utcnow() + timedelta(hours=3)).strftime('%Y-%m-%d %I:%M:%S %p')} EAT
     </div>
     """, unsafe_allow_html=True)
 
@@ -1093,7 +1199,7 @@ with m1: st.metric("Active Users", f"{active_count} / {max(_total_known, active_
 with m2: st.metric("Live Events",     f"{len(live_evs):,}")
 with m3: st.metric("Screen Time",     f"{round(total_secs/60,1)} min")
 with m4: st.metric("Apps Tracked",    str(total_apps))
-with m5: st.metric("Updated (UTC)", datetime.utcnow().strftime("%I:%M:%S %p"))
+with m5: st.metric("Updated (EAT)", (datetime.utcnow() + timedelta(hours=3)).strftime("%I:%M:%S %p"))
 
 st.markdown("<div style='height:1.2rem'></div>", unsafe_allow_html=True)
 
@@ -1380,7 +1486,7 @@ else:
     if raw_sd:
         dft = pd.DataFrame(raw_sd)
         dft["Name"] = dft["user_id"].apply(
-            lambda uid: uid_to_name.get(uid.upper(), "Unknown")
+            lambda uid: uid_to_name.get(uid.upper(), uid.lower())
         )
         dft = dft.rename(columns={
             "user_id": "User ID", "total_seconds": "Seconds", "total_minutes": "Minutes"
