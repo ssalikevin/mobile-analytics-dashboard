@@ -1,21 +1,21 @@
 {
-  "generated_at": "2026-05-19 06:30:13",
+  "generated_at": "2026-05-19 07:30:12",
   "date": "2026-05-19",
   "screen_time": [
     {
-      "user_id": "U223",
+      "user_id": "U326",
       "total_seconds": 51228,
       "total_minutes": 853.8
     },
     {
       "user_id": "U001",
-      "total_seconds": 46744,
-      "total_minutes": 779.07
+      "total_seconds": 46881,
+      "total_minutes": 781.35
     },
     {
       "user_id": "U003",
-      "total_seconds": 9990,
-      "total_minutes": 166.5
+      "total_seconds": 10145,
+      "total_minutes": 169.08
     },
     {
       "user_id": "U006",
@@ -44,20 +44,20 @@
     },
     {
       "app_name": "W4b",
-      "total_seconds": 7788,
-      "total_minutes": 129.8,
+      "total_seconds": 7887,
+      "total_minutes": 131.45,
       "rank": 4
+    },
+    {
+      "app_name": "One ui home",
+      "total_seconds": 7645,
+      "total_minutes": 127.42,
+      "rank": 5
     },
     {
       "app_name": "Chrome",
       "total_seconds": 7574,
       "total_minutes": 126.23,
-      "rank": 5
-    },
-    {
-      "app_name": "One ui home",
-      "total_seconds": 7492,
-      "total_minutes": 124.87,
       "rank": 6
     },
     {
@@ -68,8 +68,8 @@
     },
     {
       "app_name": "Upgrade",
-      "total_seconds": 5866,
-      "total_minutes": 97.77,
+      "total_seconds": 5876,
+      "total_minutes": 97.93,
       "rank": 8
     },
     {
@@ -86,8 +86,8 @@
     },
     {
       "app_name": "Photosgo",
-      "total_seconds": 2332,
-      "total_minutes": 38.87,
+      "total_seconds": 2358,
+      "total_minutes": 39.3,
       "rank": 11
     },
     {
@@ -116,8 +116,8 @@
     },
     {
       "app_name": "Musically",
-      "total_seconds": 1337,
-      "total_minutes": 22.28,
+      "total_seconds": 1339,
+      "total_minutes": 22.32,
       "rank": 16
     },
     {
@@ -397,16 +397,22 @@
       "rank": 62
     },
     {
-      "app_name": "Photopicker",
+      "app_name": "Android system",
       "total_seconds": 2,
       "total_minutes": 0.03,
       "rank": 63
     },
     {
+      "app_name": "Photopicker",
+      "total_seconds": 2,
+      "total_minutes": 0.03,
+      "rank": 64
+    },
+    {
       "app_name": "Mtp application",
       "total_seconds": 1,
       "total_minutes": 0.02,
-      "rank": 64
+      "rank": 65
     }
   ],
   "hourly_patterns": [
@@ -449,8 +455,8 @@
     {
       "hour": "06",
       "label": "06:00-07:00",
-      "total_seconds": 1732,
-      "total_minutes": 28.87
+      "total_seconds": 2024,
+      "total_minutes": 33.73
     },
     {
       "hour": "07",
