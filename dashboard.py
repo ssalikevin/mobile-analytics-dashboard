@@ -541,6 +541,18 @@ hr {{
 /* ── Dataframe ── */
 [data-testid="stDataFrame"] iframe {{
     border-radius: 10px !important;
+    background: {SURFACE} !important;
+    color-scheme: {"dark" if D else "light"} !important;
+}}
+[data-testid="stDataFrame"] {{
+    background: {SURFACE} !important;
+    border: 1px solid {BORDER} !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+}}
+/* Dark mode table: force text colors inside iframe via CSS vars */
+[data-testid="stDataFrame"] div[data-testid="stDataFrameResizable"] {{
+    background: {SURFACE} !important;
 }}
 
 /* ── Button (theme toggle) ── */
@@ -1087,7 +1099,7 @@ with st.sidebar:
 
     # Cluster status
     st.markdown(f'<div class="sb-label">Cluster</div>', unsafe_allow_html=True)
-    for label, val in [("HDFS", "ssali:9000"), ("YARN", "ssali:8088"), ("Pipeline", "Automated")]:
+    for label, val in [("HDFS UI", "ssali:9870"), ("YARN UI", "ssali:8088"), ("Pipeline", "Automated")]:
         st.markdown(f"""
         <div class="st-row">
             <div class="st-dot"></div>
@@ -1284,12 +1296,137 @@ with col_feed:
             uname    = ev.get("user_name", "?").capitalize()
             initials = uname[:2].upper()
             pkg      = ev.get("app_name", "unknown")
-            # Better package name parsing
-            # com.whatsapp.w4b → WhatsApp
-            # com.google.android.apps.maps → Maps  
-            parts = [p for p in pkg.split(".") if p not in 
-                     ("com","org","net","android","google","apps","app","mobile","phone")]
-            app = (parts[-1] if parts else pkg).replace("_","-").capitalize()
+
+            # ── Comprehensive package → friendly name lookup ──
+            PKG_NAMES = {
+                # Social & Messaging
+                "com.whatsapp":                       "WhatsApp",
+                "com.whatsapp.w4b":                   "WhatsApp Business",
+                "com.facebook.katana":                "Facebook",
+                "com.facebook.lite":                  "Facebook Lite",
+                "com.facebook.orca":                  "Messenger",
+                "com.instagram.android":              "Instagram",
+                "com.twitter.android":                "Twitter / X",
+                "com.snapchat.android":               "Snapchat",
+                "com.telegram.messenger":             "Telegram",
+                "org.telegram.messenger":             "Telegram",
+                "com.tencent.mm":                     "WeChat",
+                "com.viber.voip":                     "Viber",
+                "com.skype.raider":                   "Skype",
+                "com.discord":                        "Discord",
+                "com.linkedin.android":               "LinkedIn",
+                "com.pinterest":                      "Pinterest",
+                # Video & Entertainment
+                "com.google.android.youtube":         "YouTube",
+                "com.zhiliaoapp.musically":           "TikTok",
+                "com.ss.android.ugc.trill":           "TikTok",
+                "com.netflix.mediaclient":            "Netflix",
+                "com.spotify.music":                  "Spotify",
+                "com.amazon.avod.thirdpartyclient":   "Prime Video",
+                "tv.twitch.android.app":              "Twitch",
+                "com.google.android.apps.youtube.music": "YouTube Music",
+                # Google Apps
+                "com.google.android.gm":              "Gmail",
+                "com.google.android.apps.maps":       "Google Maps",
+                "com.google.android.googlequicksearchbox": "Google Search",
+                "com.google.android.apps.docs":       "Google Docs",
+                "com.google.android.apps.sheets":     "Google Sheets",
+                "com.google.android.apps.photos":     "Google Photos",
+                "com.google.android.calendar":        "Google Calendar",
+                "com.google.android.keep":            "Google Keep",
+                "com.google.android.apps.translate":  "Google Translate",
+                "com.google.android.apps.meetings":   "Google Meet",
+                "com.google.android.talk":            "Google Chat",
+                "com.google.android.apps.nbu.files":  "Google Files",
+                "com.google.android.apps.tachyon":    "Google Duo",
+                "com.google.android.dialer":          "Phone",
+                "com.google.android.contacts":        "Contacts",
+                "com.google.android.deskclock":       "Clock",
+                "com.google.android.calculator":      "Calculator",
+                # Browsers
+                "com.android.chrome":                 "Chrome",
+                "com.chrome.beta":                    "Chrome Beta",
+                "org.mozilla.firefox":                "Firefox",
+                "com.opera.mini.native":              "Opera Mini",
+                "com.opera.browser":                  "Opera",
+                "com.microsoft.emmx":                 "Edge",
+                "com.brave.browser":                  "Brave",
+                # Samsung Apps
+                "com.samsung.android.messaging":      "Samsung Messages",
+                "com.samsung.android.email.provider": "Samsung Email",
+                "com.samsung.android.app.notes":      "Samsung Notes",
+                "com.samsung.android.gallery3d":      "Gallery",
+                "com.sec.android.app.camera":         "Camera",
+                "com.samsung.android.contacts":       "Contacts",
+                "com.samsung.android.dialer":         "Phone",
+                "com.samsung.android.app.clockpack":  "Clock",
+                # Transsion / Tecno / itel / Infinix
+                "com.transsion.hilauncher":           "Home Screen",
+                "com.transsion.hilauncher.upgrade":   "Home Screen",
+                "com.itel.camera":                    "Camera",
+                "com.tecno.camera":                   "Camera",
+                "com.infinix.camera":                 "Camera",
+                "com.transsion.phonemaster":          "Phone Manager",
+                "com.transsion.security":             "Security",
+                # Productivity
+                "com.microsoft.office.word":          "Microsoft Word",
+                "com.microsoft.office.excel":         "Microsoft Excel",
+                "com.microsoft.office.powerpoint":    "PowerPoint",
+                "com.microsoft.teams":                "Microsoft Teams",
+                "com.microsoft.skydrive":             "OneDrive",
+                "com.adobe.reader":                   "Adobe Reader",
+                "com.dropbox.android":                "Dropbox",
+                # Finance & Shopping
+                "com.mtn.myMTN":                      "MyMTN",
+                "com.mtn.mobilemoney":                "MoMo",
+                "com.airtel.africa":                  "Airtel",
+                "com.flutterwave.flutterwavepay":     "Flutterwave",
+                "com.pesapal.mobile":                 "Pesapal",
+                # Games & Others
+                "com.android.vending":                "Play Store",
+                "com.google.android.packageinstaller": "Package Installer",
+                "com.android.packageinstaller":       "Package Installer",
+                "com.android.settings":               "Settings",
+                "com.android.systemui":               "System UI",
+                "com.android.launcher3":              "Launcher",
+                "com.android.camera2":                "Camera",
+                "com.android.gallery3d":              "Gallery",
+                "com.android.messaging":              "Messages",
+                "com.android.phone":                  "Phone",
+                "com.android.contacts":               "Contacts",
+                "com.android.calculator2":            "Calculator",
+                "com.android.calendar":               "Calendar",
+                "com.android.documentsui":            "Files",
+                "com.android.chrome":                 "Chrome",
+                "com.android.mms":                    "Messages",
+                "com.android.music":                  "Music",
+                "com.android.mediacenter":            "Media Center",
+                # Photosgo / Gallery
+                "com.google.android.apps.photosgo":   "Photos Go",
+                "com.coloros.gallery3d":              "Gallery",
+                "com.miui.gallery":                   "Gallery",
+                # Mobile Logger (this app)
+                "com.example.usagelogger":            "Usage Logger",
+                "mobile.usage.logger":                "Usage Logger",
+            }
+
+            # Lookup in dictionary first
+            app = PKG_NAMES.get(pkg.lower())
+
+            if not app:
+                # Smart fallback: strip common prefixes and clean up
+                skip = {"com","org","net","android","google","apps","app",
+                        "mobile","phone","www","sec","samsung","transsion",
+                        "infinix","tecno","itel","coloros","miui","oppo",
+                        "oneplus","huawei","vivo","xiaomi","realme"}
+                parts = [p for p in pkg.split(".")
+                         if p.lower() not in skip and len(p) > 1]
+                if parts:
+                    raw = parts[-1].replace("_"," ").replace("-"," ")
+                    # Capitalize each word
+                    app = " ".join(w.capitalize() for w in raw.split())
+                else:
+                    app = pkg.split(".")[-1].capitalize()
             etype    = ev.get("event_type", "").upper()
             dur      = ev.get("duration_seconds", 0)
             pill_cls = "open" if etype == "OPEN" else "close"
@@ -1493,7 +1630,18 @@ else:
         })
         dft["Hours"] = (dft["Seconds"] / 3600).round(3)
         dft = dft[["User ID", "Name", "Seconds", "Minutes", "Hours"]]
-        st.dataframe(dft, use_container_width=True, hide_index=True)
+        st.dataframe(
+            dft,
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "User ID":  st.column_config.TextColumn("User ID",  width="small"),
+                "Name":     st.column_config.TextColumn("Name",     width="medium"),
+                "Seconds":  st.column_config.NumberColumn("Seconds",  format="%d s"),
+                "Minutes":  st.column_config.NumberColumn("Minutes",  format="%.2f m"),
+                "Hours":    st.column_config.NumberColumn("Hours",    format="%.3f h"),
+            }
+        )
 
 
 # ── FOOTER ─────────────────────────────────────────────────────────────────────
